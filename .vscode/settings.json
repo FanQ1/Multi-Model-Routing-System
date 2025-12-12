@@ -1,5 +1,8 @@
 {
     "python.analysis.extraPaths": [
         "./f_Q"
+    ],
+    "cursorpyright.analysis.extraPaths": [
+        "./f_Q"
     ]
 }
