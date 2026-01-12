@@ -8,6 +8,9 @@ from utils.config import TASK_TYPES, DOMAINS, REASONING_LEVELS, SAFETY_LEVELS, L
 from utils.config import InterpretableType
 import utils.interpretable_keywords as KEYWORDS  
 
+# 
+from router.models.Llm_client import LLM
+from models.logger import logger
 """
 
 """
@@ -17,13 +20,12 @@ class QSpaceEncode:
     将查询文本和id转换为混合向量
     混合向量包括 可解释性向量 和 隐向量
     """
-    def __init__(self, embedding_model_name='all-MiniLM-L6-v2', latent_dim=128):
-        # q_spcae需要embedding模型处理隐藏特征
-        self.embedding_model = SentenceTransformer(embedding_model_name)
-        print("Embdedding model loaded")
+    def __init__(self, latent_dim=128):
+        self.llm_client = LLM()
+        self.embedding_dim = 384
+        self.projection_layer = nn.Linear(self.embedding_dim, latent_dim)
 
         # --- 正确初始化所有 MultiLabelBinarizer ---
-        # fit all tags in config.py
         self.task_mlb = MultiLabelBinarizer(classes=TASK_TYPES)
         self.task_mlb.fit([TASK_TYPES])
 
@@ -41,10 +43,6 @@ class QSpaceEncode:
         
         self.tenant_pref_mlb = MultiLabelBinarizer(classes=TENANT_PREFERENCES)
         self.tenant_pref_mlb.fit([TENANT_PREFERENCES])
-
-        # 添加投影层
-        embedding_dim = self.embedding_model.get_sentence_embedding_dimension()
-        self.projection_layer = nn.Linear(embedding_dim, latent_dim) # 需要训练的神经网络
 
         # 租户配置
         self.tenant_configs = {
@@ -145,21 +143,22 @@ class QSpaceEncode:
         interpretable_vectors = [task_vec, domain_vec, reasoning_vec, safety_vec, length_vec, tenant_pref_vec]
         q_interpretable = torch.tensor(interpretable_vectors).flatten().float()
 
-        # 3. 调用嵌入服务
-        text_embedding_tensor = self.embedding_model.encode(query_text, convert_to_tensor=True)
+        with torch.no_grad(): 
+            text_embedding_tensor = self.llm_client.get_offline_embedding(query_text)
+
+        device = next(self.projection_layer.parameters()).device # 获取投影层所在的设备
+        q_interpretable = q_interpretable.to(device)
+        text_embedding_tensor = text_embedding_tensor.to(device)
 
         # 4. 应用投影层 (生成潜在向量)
-        q_latent = self.projection_layer(text_embedding_tensor)
+        z_Q = self.projection_layer(text_embedding_tensor)
         
         # 5. 拼接成最终的Q向量
-        Q_vector = torch.cat([q_interpretable, q_latent])
-        
-        # z_Q 是用于Z空间匹配的潜在部分
-        z_Q = q_latent
+        Q_vector = torch.cat([q_interpretable, z_Q])
 
         return {
             "q_interpretable": q_interpretable,
-            "q_latent": q_latent,
+            # "q_latent": q_latent,
             "z_Q": z_Q,
             "Q_vector": Q_vector
         }

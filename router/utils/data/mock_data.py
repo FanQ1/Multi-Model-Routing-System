@@ -1,0 +1,437 @@
+[
+  {
+    "prompt": "如何在 Python 中实现一个快速排序算法？",
+    "winner": "deepseek-chat",
+    "loser": "glm-4"
+  },
+  {
+    "prompt": "请解释 Transformer 模型中的 Self-Attention 机制。",
+    "winner": "qwen-72b",
+    "loser": "deepseek-chat"
+  },
+  {
+    "prompt": "写一篇关于人工智能发展历史的简短文章。",
+    "winner": "glm-4",
+    "loser": "qwen-72b"
+  },
+  {
+    "prompt": "帮我润色这段文字：'我今天去商场买衣服，但是人很多，很不开心。'",
+    "winner": "deepseek-chat",
+    "loser": "glm-4"
+  },
+  {
+    "prompt": "比较 React 和 Vue 的核心区别是什么？",
+    "winner": "qwen-72b",
+    "loser": "glm-4"
+  },
+  {
+    "prompt": "请解释一下量子计算的基本原理。",
+    "winner": "glm-4",
+    "loser": "deepseek-chat"
+  },
+  {
+    "prompt": "如何使用 Pandas 读取一个巨大的 CSV 文件？",
+    "winner": "deepseek-chat",
+    "loser": "qwen-72b"
+  },
+  {
+    "prompt": "写一首关于秋天的七言绝句。",
+    "winner": "glm-4",
+    "loser": "deepseek-chat"
+  },
+  {
+    "prompt": "解释一下 HTTP 和 HTTPS 的区别。",
+    "winner": "qwen-72b",
+    "loser": "deepseek-chat"
+  },
+  {
+    "prompt": "如何修复 Windows 蓝屏错误？",
+    "winner": "deepseek-chat",
+    "loser": "glm-4"
+  },
+  {
+    "prompt": "介绍一下 Docker 的基本概念。",
+    "winner": "qwen-72b",
+    "loser": "glm-4"
+  },
+  {
+    "prompt": "如何使用 Python 发送一封带有附件的邮件？",
+    "winner": "deepseek-chat",
+    "loser": "qwen-72b"
+  },
+  {
+    "prompt": "帮我翻译成英文：'由于天气原因，航班可能会延误。'",
+    "winner": "glm-4",
+    "loser": "deepseek-chat"
+  },
+  {
+    "prompt": "请解释什么是过拟合（Overfitting）？",
+    "winner": "qwen-72b",
+    "loser": "glm-4"
+  },
+  {
+    "prompt": "如何配置 Nginx 作为反向代理服务器？",
+    "winner": "deepseek-chat",
+    "loser": "glm-4"
+  },
+  {
+    "prompt": "写一个简单的 SQL 查询，查找销售额最高的前 5 名员工。",
+    "winner": "glm-4",
+    "loser": "deepseek-chat"
+  },
+  {
+    "prompt": "解释一下 TCP 握手的过程。",
+    "winner": "qwen-72b",
+    "loser": "glm-4"
+  },
+  {
+    "prompt": "如何在 Linux 中批量重命名文件？",
+    "winner": "deepseek-chat",
+    "loser": "qwen-72b"
+  },
+  {
+    "prompt": "请评价一下区块链技术的应用前景。",
+    "winner": "glm-4",
+    "loser": "deepseek-chat"
+  },
+  {
+    "prompt": "如何使用 Git 合并代码并解决冲突？",
+    "winner": "deepseek-chat",
+    "loser": "qwen-72b"
+  },
+  {
+    "prompt": "解释一下什么是 RESTful API。",
+    "winner": "qwen-72b",
+    "loser": "glm-4"
+  },
+  {
+    "prompt": "请用 C 语言实现一个链表的反转。",
+    "winner": "deepseek-chat",
+    "loser": "glm-4"
+  },
+  {
+    "prompt": "如何优化 MySQL 数据库查询性能？",
+    "winner": "qwen-72b",
+    "loser": "deepseek-chat"
+  },
+  {
+    "prompt": "写一段 Python 代码，使用多线程爬取网页。",
+    "winner": "glm-4",
+    "loser": "qwen-72b"
+  },
+  {
+    "prompt": "解释一下 JWT (JSON Web Token) 的验证流程。",
+    "winner": "deepseek-chat",
+    "loser": "glm-4"
+  },
+  {
+    "prompt": "如何使用 Matplotlib 绘制一个折线图？",
+    "winner": "qwen-72b",
+    "loser": "deepseek-chat"
+  },
+  {
+    "prompt": "请描述一下 Microservices 和 Monolithic 架构的区别。",
+    "winner": "glm-4",
+    "loser": "deepseek-chat"
+  },
+  {
+    "prompt": "如何在 Vue.js 中使用 Vuex 管理状态？",
+    "winner": "deepseek-chat",
+    "loser": "qwen-72b"
+  },
+  {
+    "prompt": "解释一下 Redis 的数据结构类型。",
+    "winner": "qwen-72b",
+    "loser": "glm-4"
+  },
+  {
+    "prompt": "如何用 Python 实现 A* 寻路算法？",
+    "winner": "deepseek-chat",
+    "loser": "glm-4"
+  },
+  {
+    "prompt": "请简述一下 Kubernetes 的核心组件。",
+    "winner": "glm-4",
+    "loser": "deepseek-chat"
+  },
+  {
+    "prompt": "如何使用 Scikit-Learn 进行线性回归？",
+    "winner": "qwen-72b",
+    "loser": "glm-4"
+  },
+  {
+    "prompt": "写一段 Java 代码，实现单例模式。",
+    "winner": "deepseek-chat",
+    "loser": "qwen-72b"
+  },
+  {
+    "prompt": "解释一下 CDN 的工作原理。",
+    "winner": "glm-4",
+    "loser": "deepseek-chat"
+  },
+  {
+    "prompt": "如何在 Python 中使用 Asyncio 进行异步编程？",
+    "winner": "qwen-72b",
+    "loser": "deepseek-chat"
+  },
+  {
+    "prompt": "请解释什么是 GraphQL 以及它的优势。",
+    "winner": "glm-4",
+    "loser": "qwen-72b"
+  },
+  {
+    "prompt": "如何配置 Nginx 实现负载均衡？",
+    "winner": "deepseek-chat",
+    "loser": "glm-4"
+  },
+  {
+    "prompt": "解释一下 OSI 七层模型。",
+    "winner": "qwen-72b",
+    "loser": "deepseek-chat"
+  },
+  {
+    "prompt": "如何用 Python 检查一个文件是否存在？",
+    "winner": "glm-4",
+    "loser": "qwen-72b"
+  },
+  {
+    "prompt": "请描述一下 CAP 定理。",
+    "winner": "deepseek-chat",
+    "loser": "glm-4"
+  },
+  {
+    "prompt": "如何使用 PyTorch 定义一个简单的神经网络？",
+    "winner": "qwen-72b",
+    "loser": "deepseek-chat"
+  },
+  {
+    "prompt": "写一段 Bash 脚本，自动备份 MySQL 数据库。",
+    "winner": "glm-4",
+    "loser": "qwen-72b"
+  },
+  {
+    "prompt": "解释一下什么是 XSS 攻击以及如何防御。",
+    "winner": "deepseek-chat",
+    "loser": "glm-4"
+  },
+  {
+    "prompt": "如何在 Git 中创建并切换到一个新的分支？",
+    "winner": "qwen-72b",
+    "loser": "deepseek-chat"
+  },
+  {
+    "prompt": "请评价一下 Go 语言在并发处理方面的优势。",
+    "winner": "glm-4",
+    "loser": "qwen-72b"
+  },
+  {
+    "prompt": "如何使用 Python 的 requests 库发送 POST 请求？",
+    "winner": "deepseek-chat",
+    "loser": "glm-4"
+  },
+  {
+    "prompt": "解释一下什么是微服务架构中的服务发现。",
+    "winner": "qwen-72b",
+    "loser": "deepseek-chat"
+  },
+  {
+    "prompt": "写一段 CSS 代码，实现一个三栏布局。",
+    "winner": "glm-4",
+    "loser": "qwen-72b"
+  },
+  {
+    "prompt": "如何在 Linux 中查看正在运行的进程？",
+    "winner": "deepseek-chat",
+    "loser": "glm-4"
+  },
+  {
+    "prompt": "请解释一下什么是索引以及它的优缺点。",
+    "winner": "qwen-72b",
+    "loser": "glm-4"
+  },
+  {
+    "prompt": "如何使用 Node.js 创建一个简单的 Web 服务器？",
+    "winner": "glm-4",
+    "loser": "deepseek-chat"
+  },
+  {
+    "prompt": "解释一下 Session 和 Cookie 的区别。",
+    "winner": "deepseek-chat",
+    "loser": "qwen-72b"
+  },
+  {
+    "prompt": "如何使用 Docker Compose 编排多个服务？",
+    "winner": "qwen-72b",
+    "loser": "glm-4"
+  },
+  {
+    "prompt": "写一段 Python 代码，使用正则表达式提取邮箱。",
+    "winner": "glm-4",
+    "loser": "deepseek-chat"
+  },
+  {
+    "prompt": "解释一下什么是负载均衡以及常用算法。",
+    "winner": "deepseek-chat",
+    "loser": "glm-4"
+  },
+  {
+    "prompt": "如何在 React 中使用 Context API 进行跨组件通信？",
+    "winner": "qwen-72b",
+    "loser": "deepseek-chat"
+  },
+  {
+    "prompt": "请描述一下敏捷开发（Agile）的核心价值观。",
+    "winner": "glm-4",
+    "loser": "qwen-72b"
+  },
+  {
+    "prompt": "如何使用 Python 连接到 MongoDB 并查询数据？",
+    "winner": "deepseek-chat",
+    "loser": "glm-4"
+  },
+  {
+    "prompt": "解释一下什么是 RPC 以及 gRPC 的特点。",
+    "winner": "qwen-72b",
+    "loser": "deepseek-chat"
+  },
+  {
+    "prompt": "写一段 JavaScript 代码，实现防抖函数（Debounce）。",
+    "winner": "glm-4",
+    "loser": "qwen-72b"
+  },
+  {
+    "prompt": "如何在 Linux 中查看磁盘使用情况？",
+    "winner": "deepseek-chat",
+    "loser": "glm-4"
+  },
+  {
+    "prompt": "解释一下什么是中间件（Middleware）。",
+    "winner": "qwen-72b",
+    "loser": "deepseek-chat"
+  },
+  {
+    "prompt": "如何使用 Python 的 logging 模块记录日志？",
+    "winner": "glm-4",
+    "loser": "deepseek-chat"
+  },
+  {
+    "prompt": "请解释一下什么是分布式锁。",
+    "winner": "deepseek-chat",
+    "loser": "qwen-72b"
+  },
+  {
+    "prompt": "如何在 Vue 中使用 Keep-Alive 缓存组件？",
+    "winner": "qwen-72b",
+    "loser": "glm-4"
+  },
+  {
+    "prompt": "描述一下你在项目中遇到的最大技术难题及解决过程。",
+    "winner": "glm-4",
+    "loser": "deepseek-chat"
+  },
+  {
+    "prompt": "如何使用 Ansible 批量部署应用？",
+    "winner": "deepseek-chat",
+    "loser": "qwen-72b"
+  },
+  {
+    "prompt": "解释一下什么是蓝绿部署。",
+    "winner": "qwen-72b",
+    "loser": "glm-4"
+  },
+  {
+    "prompt": "写一段 Python 代码，读取 Excel 文件内容。",
+    "winner": "glm-4",
+    "loser": "deepseek-chat"
+  },
+  {
+    "prompt": "如何使用 TensorFlow 训练一个简单的分类模型？",
+    "winner": "deepseek-chat",
+    "loser": "qwen-72b"
+  },
+  {
+    "prompt": "解释一下什么是回环地址（Loopback Address）。",
+    "winner": "qwen-72b",
+    "loser": "glm-4"
+  },
+  {
+    "prompt": "如何在 Git 中撤销上一次提交？",
+    "winner": "glm-4",
+    "loser": "deepseek-chat"
+  },
+  {
+    "prompt": "请描述一下你印象最深的一次团队合作经历。",
+    "winner": "deepseek-chat",
+    "loser": "qwen-72b"
+  },
+  {
+    "prompt": "如何使用 Fiddler 或 Wireshark 抓取网络包？",
+    "winner": "qwen-72b",
+    "loser": "glm-4"
+  },
+  {
+    "prompt": "解释一下什么是灰度发布。",
+    "winner": "glm-4",
+    "loser": "deepseek-chat"
+  },
+  {
+    "prompt": "如何在 Python 中使用生成器（Generator）？",
+    "winner": "deepseek-chat",
+    "loser": "qwen-72b"
+  },
+  {
+    "prompt": "请解释一下什么是装饰器模式。",
+    "winner": "qwen-72b",
+    "loser": "glm-4"
+  },
+  {
+    "prompt": "如何在 Redis 中实现简单的消息队列？",
+    "winner": "glm-4",
+    "loser": "deepseek-chat"
+  },
+  {
+    "prompt": "描述一下 Spring Boot 的核心注解及其作用。",
+    "winner": "deepseek-chat",
+    "loser": "qwen-72b"
+  },
+  {
+    "prompt": "如何使用 Python 的 unittest 框架编写单元测试？",
+    "winner": "qwen-72b",
+    "loser": "glm-4"
+  },
+  {
+    "prompt": "解释一下什么是死锁以及如何避免。",
+    "winner": "glm-4",
+    "loser": "deepseek-chat"
+  },
+  {
+    "prompt": "如何在 CSS 中实现水平垂直居中？",
+    "winner": "deepseek-chat",
+    "loser": "qwen-72b"
+  },
+  {
+    "prompt": "请解释一下什么是幂等性。",
+    "winner": "qwen-72b",
+    "loser": "glm-4"
+  },
+  {
+    "prompt": "如何使用 Jenkins 实现 CI/CD 自动化部署？",
+    "winner": "glm-4",
+    "loser": "deepseek-chat"
+  },
+  {
+    "prompt": "描述一下 TypeScript 中 Interface 和 Type 的区别。",
+    "winner": "deepseek-chat",
+    "loser": "qwen-72b"
+  },
+  {
+    "prompt": "如何在 Linux 中查看系统负载和内存占用？",
+    "winner": "qwen-72b",
+    "loser": "glm-4"
+  },
+  {
+    "prompt": "解释一下什么是 APM (Application Performance Monitoring)。",
+    "winner": "glm-4",
+    "loser": "deepseek-chat"
+  }
+]
