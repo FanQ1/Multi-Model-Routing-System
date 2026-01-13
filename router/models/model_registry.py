@@ -4,12 +4,12 @@ MODEL_REGISTRY = {
         "meta_scalars": [0.8, 0.5, 1.0] 
     },
     
-    "qwen2.5-72b": {
+    "qwen2.5-7b-instruct": {
         "probe_scores": [0.95, 0.90, 0.92, 0.95, 0.92], 
         "meta_scalars": [0.6, 0.8, 1.0] 
     },
     
-    "deepseek-coder-v2": {
+    "deepseek-coder": {
         "probe_scores": [0.80, 0.99, 0.85, 0.92, 0.70], 
         "meta_scalars": [0.1, 0.9, 1.0] 
     }

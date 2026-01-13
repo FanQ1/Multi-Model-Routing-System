@@ -2,11 +2,13 @@ import torch
 import torch.nn as nn
 import numpy as np
 
-class MSpaceEncode:
+class MSpaceEncode(nn.Module):
     """
     将模型探测分数和元数据转换为 Z 空间向量
     """
     def __init__(self, latent_dim=128):
+        super().__init__()
+        
         # 5 个探测任务分数 (math, code, reasoning, safety, tools)
         self.probe_dim = 5 
         # 3 个标量特征 (cost_norm, latency_norm, context_norm)

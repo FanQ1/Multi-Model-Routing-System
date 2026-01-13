@@ -1,5 +1,6 @@
 {
     "python.analysis.extraPaths": [
         "./f_Q"
-    ]
+    ],
+    "Codegeex.RepoIndex": true
 }

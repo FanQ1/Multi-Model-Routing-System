@@ -1,0 +1,28 @@
+2026-01-13 01:00:45,304 - INFO - Use pytorch device_name: cuda:0
+2026-01-13 01:00:45,304 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-01-13 01:00:50,881 - WARNING - Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`
+2026-01-13 01:01:02,018 - INFO - LLM init finished.
+2026-01-13 01:02:44,131 - INFO - Use pytorch device_name: cuda:0
+2026-01-13 01:02:44,132 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-01-13 01:02:47,963 - INFO - LLM init finished.
+2026-01-13 01:04:14,031 - INFO - Use pytorch device_name: cuda:0
+2026-01-13 01:04:14,032 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-01-13 01:04:18,059 - INFO - LLM init finished.
+2026-01-13 01:05:13,700 - INFO - Use pytorch device_name: cuda:0
+2026-01-13 01:05:13,700 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-01-13 01:05:18,128 - INFO - LLM init finished.
+2026-01-13 01:07:23,877 - INFO - Use pytorch device_name: cuda:0
+2026-01-13 01:07:23,877 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-01-13 01:07:27,595 - INFO - LLM init finished.
+2026-01-13 01:09:25,662 - INFO - Use pytorch device_name: cuda:0
+2026-01-13 01:09:25,663 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-01-13 01:09:29,166 - INFO - LLM init finished.
+2026-01-13 01:12:35,720 - INFO - Use pytorch device_name: cuda:0
+2026-01-13 01:12:35,721 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-01-13 01:12:39,660 - INFO - LLM init finished.
+2026-01-13 01:13:04,018 - INFO - Use pytorch device_name: cuda:0
+2026-01-13 01:13:04,018 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-01-13 01:13:07,668 - INFO - LLM init finished.
+2026-01-13 01:19:47,820 - INFO - Use pytorch device_name: cuda:0
+2026-01-13 01:19:47,820 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-01-13 01:19:51,337 - INFO - LLM init finished.

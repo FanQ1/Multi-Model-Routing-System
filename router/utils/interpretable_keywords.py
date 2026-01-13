@@ -1,4 +1,4 @@
-from config import InterpretableType
+from router.utils.config import InterpretableType
 
 
 

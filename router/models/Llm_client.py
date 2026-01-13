@@ -1,13 +1,13 @@
 from zhipuai import ZhipuAI
-from models.settings import Settings
-from models.logger import logger
+from router.models.settings import Settings
+from router.models.logger import logger
 
 from sentence_transformers import SentenceTransformer 
 import torch
 import torch.nn as nn
 class LLM:
     def __init__(self):
-        self.client = ZhipuAI(api_key=Settings.get_api())
+        self.client = ZhipuAI(api_key=Settings().get_api())
 
         self.embedding_model = SentenceTransformer('all-MiniLM-L6-v2')
         self.embedding_model.eval()

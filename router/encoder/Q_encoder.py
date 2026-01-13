@@ -4,23 +4,25 @@ import re
 from sentence_transformers import SentenceTransformer
 from sklearn.preprocessing import MultiLabelBinarizer
 # -- 自定义库
-from utils.config import TASK_TYPES, DOMAINS, REASONING_LEVELS, SAFETY_LEVELS, LENGTH_BUCKETS, TENANT_PREFERENCES
-from utils.config import InterpretableType
-import utils.interpretable_keywords as KEYWORDS  
+from router.utils.config import TASK_TYPES, DOMAINS, REASONING_LEVELS, SAFETY_LEVELS, LENGTH_BUCKETS, TENANT_PREFERENCES
+from router.utils.config import InterpretableType
+import router.utils.interpretable_keywords as KEYWORDS  
 
 # 
 from router.models.Llm_client import LLM
-from models.logger import logger
+from router.models.logger import logger
 """
 
 """
 
-class QSpaceEncode:
+class QSpaceEncode(nn.Module):
     """
     将查询文本和id转换为混合向量
     混合向量包括 可解释性向量 和 隐向量
     """
     def __init__(self, latent_dim=128):
+        super().__init__()
+
         self.llm_client = LLM()
         self.embedding_dim = 384
         self.projection_layer = nn.Linear(self.embedding_dim, latent_dim)

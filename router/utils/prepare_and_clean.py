@@ -1,75 +1,75 @@
 import json
 import os
-from datasets import load_dataset
+import pickle
+from sentence_transformers import SentenceTransformer
 from tqdm import tqdm
 
-# 配置
-OUTPUT_FILE = "data/raw_tiger_1k.json"
-TARGET_COUNT = 1000  # 想要多少条
+# 1. 配置
+INPUT_FILE = "data/mock_data.json"
+OUTPUT_FILE = "data/router_embeddings.pkl"
+
+# 2. 加载离线模型
+# 这一行会自动从 HuggingFace 下载模型到本地 (只需要下载一次)
+# 如果你也连不上 HuggingFace，它可能会报错。但通常 sentence-transformers 的下载比较稳定。
+print("正在加载离线 Embedding 模型 (BAAI/bge-small-en-v1.5)...")
+model = SentenceTransformer('BAAI/bge-small-en-v1.5')
+print("模型加载成功！")
 
 def main():
-    print("正在从 HuggingFace 下载 TIGER-Lab/ucl-trustful-qa...")
-    print("这是一个干净的小数据集，不需要复杂的清洗。")
+    print(f"正在读取数据: {INPUT_FILE}")
     
-    try:
-        # 这个数据集在 HuggingFace 上是公开的，不需要登录
-        dataset = load_dataset("C-MTEB/C-STM", split="test")
-        print(f"下载成功！共 {len(dataset)} 条数据。")
-    except Exception as e:
-        print(f"下载失败: {e}")
-        print("请确保已安装 datasets 库: pip install datasets")
+    if not os.path.exists(INPUT_FILE):
+        print(f"错误：找不到文件 {INPUT_FILE}")
         return
 
-    processed_data = []
-    count = 0
+    with open(INPUT_FILE, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+        
+    print(f"读取成功！共 {len(data)} 条对局数据。")
+    
+    # 如果是中文数据，建议换成中文模型：
+    # model = SentenceTransformer('shibing624/text2vec-base-chinese')
+    
+    embeddings = []
+    labels = []
+    model_pairs = []
+    
+    # 批量处理可以稍微快点，但 100 条一条条跑也很快
+    for item in tqdm(data, desc="生成向量"):
+        prompt = item['prompt']
+        winner = item['winner']
+        loser = item['loser']
+        
+        # 1. 离线生成向量
+        vec = model.encode(prompt, normalize_embeddings=True)
+        
+        # 2. 确定标签 (按名字排序固定 A/B 顺序)
+        models = sorted([winner, loser])
+        model_a = models[0]
+        model_b = models[1]
+        
+        if winner == model_a:
+            label = 0 # A 赢
+        else:
+            label = 1 # B 赢
+            
+        embeddings.append(vec)
+        labels.append(label)
+        model_pairs.append((model_a, model_b, winner))
 
-    # 只保留我们关心的模型
-    valid_keywords = ["glm", "deepseek", "qwen"]
-
-    print("正在处理数据...")
-    for item in tqdm(dataset):
-        if count >= TARGET_COUNT:
-            break
-            
-        prompt = item.get('prompt', item.get('question'))
-        responses = item.get('responses', [])
-        ranking = item.get('rank', [])
-        
-        if not prompt or not responses or len(responses) < 2:
-            continue
-            
-        # 找到排名第一和第二的模型
-        # ranking 通常是对应 responses 的索引，比如 [1, 0] 表示 responses[1] 是第一名
-        try:
-            best_idx = ranking[0]
-            second_idx = ranking[1]
-        except:
-            continue
-            
-        winner_data = responses[best_idx]
-        loser_data = responses[second_idx]
-        
-        winner_model = winner_data.get('model', winner_data.get('model_name', 'unknown'))
-        loser_model = loser_data.get('model', loser_data.get('model_name', 'unknown'))
-        
-        # 简单的模型过滤 (只保留我们注册表里的模型)
-        # 注意：这个数据集里模型名可能不一样，比如是 'deepseek-chat'，匹配 'deepseek' 即可
-        if not any(kw in winner_model.lower() or kw in loser_model.lower() for kw in valid_keywords):
-            continue
-            
-        processed_data.append({
-            "prompt": prompt,
-            "winner": winner_model,
-            "loser": loser_model
-        })
-        count += 1
-
-    # 保存
-    os.makedirs("data", exist_ok=True)
-    with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
-        json.dump(processed_data, f, ensure_ascii=False, indent=2)
-        
-    print(f"\n处理完成！共保存 {len(processed_data)} 条数据到 {OUTPUT_FILE}")
+    # 3. 保存
+    print(f"\n处理完成！共生成 {len(embeddings)} 条向量数据。")
+    
+    save_data = {
+        "embeddings": embeddings,
+        "labels": labels,
+        "model_pairs": model_pairs
+    }
+    
+    # os.makedirs("data", exist_ok=True)
+    with open(OUTPUT_FILE, 'wb') as f:
+        pickle.dump(save_data, f)
+        print(f"向量数据已保存至: {OUTPUT_FILE}")
 
 if __name__ == "__main__":
     main()
