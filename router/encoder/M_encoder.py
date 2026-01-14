@@ -10,7 +10,7 @@ class MSpaceEncode(nn.Module):
         super().__init__()
         
         # 5 个探测任务分数 (math, code, reasoning, safety, tools)
-        self.probe_dim = 5 
+        self.probe_dim = 6 
         # 3 个标量特征 (cost_norm, latency_norm, context_norm)
         self.meta_scalar_dim = 3 
         total_input_dim = self.probe_dim + self.meta_scalar_dim

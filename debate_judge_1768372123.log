@@ -1,0 +1,5 @@
+2026-01-14 14:28:44 [INFO] HTTP Request: POST https://gateway.api.anyint.ai/openai/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+2026-01-14 14:28:44 [INFO] Retrying request to /chat/completions in 0.442427 seconds
+2026-01-14 14:28:45 [INFO] HTTP Request: POST https://gateway.api.anyint.ai/openai/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+2026-01-14 14:28:45 [INFO] Retrying request to /chat/completions in 0.790023 seconds
+2026-01-14 14:28:46 [INFO] HTTP Request: POST https://gateway.api.anyint.ai/openai/v1/chat/completions "HTTP/1.1 500 Internal Server Error"

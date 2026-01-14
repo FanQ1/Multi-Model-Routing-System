@@ -14,7 +14,7 @@ from router.models.model_registry import MODEL_REGISTRY
 # --- 1. 配置 ---
 LATENT_DIM = 128
 LEARNING_RATE = 1e-3
-EPOCHS = 50
+EPOCHS = 25
 MARGIN = 0.5
 BATCH_SIZE = 32  # 建议使用 DataLoader，这里为了简单用伪 batch
 DATA_PATH = "router/utils/data/router_embeddings.pkl" # 确保路径正确

@@ -66,7 +66,7 @@ class QSpaceEncode(nn.Module):
         for task, keys in keywords.items():
             if any(key in query.lower() for key in keys):
                 detected_tasks.append(task)
-        return detected_tasks if detected_tasks else ["chat"] # 默认为聊天
+        return detected_tasks if detected_tasks else ["code"] 
     
     def detect_domain(self, query: str):
         """
@@ -88,8 +88,13 @@ class QSpaceEncode(nn.Module):
         :param query: 查询文本
         :return: 安全性
         """
-        # TODO: 检测安全性
-        return "safety"
+        keywords = KEYWORDS.get_interpretable_keywords(InterpretableType.SAFETY)
+
+        detected_tasks = []
+        for task, keys in keywords.items():
+            if any(key in query.lower() for key in keys):
+                detected_tasks.append(task)
+        return detected_tasks if detected_tasks else ["safe"]
     
     def detect_length(self, query: str):
         """
@@ -97,17 +102,24 @@ class QSpaceEncode(nn.Module):
         :param query: 查询文本
         :return: 长度
         """
-        # TODO: 检测长度
-        return "length"
+        keywords = KEYWORDS.get_interpretable_keywords(InterpretableType.LENGTH)
+
+        detected_tasks = []
+        for task, keys in keywords.items():
+            if any(key in query.lower() for key in keys):
+                detected_tasks.append(task)
+        return detected_tasks if detected_tasks else ["medium"]
     
-    def estimate_reasoning_level(self, query_text: str):
+    
+    def estimate_reasoning_level(self, query: str):
         """根据查询长度和关键词估算推理深度"""
-        if "step by step" in query_text.lower() or "explain" in query_text.lower() or len(query_text) > 200:
-            return ["high"]
-        elif "why" in query_text.lower() or "how" in query_text.lower():
-            return ["medium"]
-        else:
-            return ["low"]
+        keywords = KEYWORDS.get_interpretable_keywords(InterpretableType.REASONING_LEVEL)
+
+        detected_tasks = []
+        for task, keys in keywords.items():
+            if any(key in query.lower() for key in keys):
+                detected_tasks.append(task)
+        return detected_tasks if detected_tasks else ["moderate"]
         
     def get_tenant_preference(self, tenant_id: str):
         """
@@ -115,15 +127,35 @@ class QSpaceEncode(nn.Module):
         :param tenant_id: 租户id
         :return: 租户偏好
         """
-
-        # 通过id查询数据库 得到用户的约束
-
-        # TODO: 检测租户偏好
-        return "tenant_preference"
+        return "cost"
     
     # -- 核心流程 -- 
     def encode(self, query_text: str, tenant_id: str):
         # 1. 生成可解释特征 结构为二维列表
+        q_interpretable = self.get_interpretable_vector(query_text=query_text, tenant_id=tenant_id)
+
+        with torch.no_grad(): 
+            text_embedding_tensor = self.llm_client.get_offline_embedding(query_text)
+
+        device = next(self.projection_layer.parameters()).device # 获取投影层所在的设备
+        q_interpretable = q_interpretable.to(device)
+        
+        text_embedding_tensor = text_embedding_tensor.to(device)
+
+        # 4. 应用投影层 (生成潜在向量)
+        z_Q = self.projection_layer(text_embedding_tensor)
+        
+        # 5. 拼接成最终的Q向量
+        Q_vector = torch.cat([q_interpretable, z_Q])
+
+        return {
+            "q_interpretable": q_interpretable,
+            # "q_latent": q_latent,
+            "z_Q": z_Q,
+            "Q_vector": Q_vector
+        }
+    
+    def get_interpretable_vector(self, query_text: str, tenant_id: str):
         interpretable_features_list = [
             self.detect_task_type(query_text),
             self.detect_domain(query_text),
@@ -145,23 +177,4 @@ class QSpaceEncode(nn.Module):
         interpretable_vectors = [task_vec, domain_vec, reasoning_vec, safety_vec, length_vec, tenant_pref_vec]
         q_interpretable = torch.tensor(interpretable_vectors).flatten().float()
 
-        with torch.no_grad(): 
-            text_embedding_tensor = self.llm_client.get_offline_embedding(query_text)
-
-        device = next(self.projection_layer.parameters()).device # 获取投影层所在的设备
-        q_interpretable = q_interpretable.to(device)
-        text_embedding_tensor = text_embedding_tensor.to(device)
-
-        # 4. 应用投影层 (生成潜在向量)
-        z_Q = self.projection_layer(text_embedding_tensor)
-        
-        # 5. 拼接成最终的Q向量
-        Q_vector = torch.cat([q_interpretable, z_Q])
-
-        return {
-            "q_interpretable": q_interpretable,
-            # "q_latent": q_latent,
-            "z_Q": z_Q,
-            "Q_vector": Q_vector
-        }
-
+        return q_interpretable
