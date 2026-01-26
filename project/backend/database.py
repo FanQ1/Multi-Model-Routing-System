@@ -24,10 +24,10 @@ class Model(Base):
     capability_ranks = Column(JSON)  # 存储原始排名
     capability_vector = Column(JSON)  # 存储能力向量（一维数组）
 
-    max_tokens = Column(Integer)
-    avg_latency_ms = Column(Integer)
-    cost_per_1k_usd = Column(Float)
-    stake_eth = Column(Float)
+    max_tokens = Column(Integer, nullable=True, default=8192)
+    avg_latency_ms = Column(Integer, nullable=True, default=1000)
+    cost_per_1k_usd = Column(Float, nullable=True, default=0.01)
+    stake_eth = Column(Float, nullable=True, default=10.0)
     is_verified = Column(Boolean, default=False)
     trust_score = Column(Float, default=50.0)
     violations = Column(Integer, default=0)

@@ -33,7 +33,11 @@ const Dashboard = () => {
     const fetchData = async () => {
       try {
         const response = await dashboardAPI.getOverview()
-        setData(response.data)
+        if (response.data.success) {
+          setData(response.data.data)
+        } else {
+          console.error('Failed to fetch dashboard data:', response.data.message)
+        }
       } catch (error) {
         console.error('Failed to fetch dashboard data:', error)
       } finally {

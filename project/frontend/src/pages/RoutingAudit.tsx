@@ -37,6 +37,7 @@ interface RoutingResult {
   cost_per_1k?: number
   error?: string
   suggestion?: string
+  response?: string
 }
 
 const RoutingAudit = () => {
@@ -65,7 +66,16 @@ const RoutingAudit = () => {
     setLoading(true)
     try {
       const response = await routingAPI.routeQuery(query, capability || undefined)
-      setResult(response.data)
+      console.log('Full response:', response)
+      console.log('Response data:', response.data)
+      // 正确处理后端返回的响应数据
+      if (response.data && response.data.success) {
+        console.log('Setting result with data:', response.data.data)
+        setResult(response.data.data)
+      } else {
+        console.log('Setting result with full data:', response.data)
+        setResult(response.data)
+      }
       fetchStats() // Refresh stats after routing
     } catch (error) {
       console.error('Failed to route query:', error)
@@ -135,28 +145,28 @@ const RoutingAudit = () => {
                   <Typography variant="h6" gutterBottom>
                     Routing Result
                   </Typography>
-                  {result.success ? (
+                  {/* 调试信息 */}
+                  <Typography variant="caption" color="textSecondary" sx={{ display: 'block', mb: 1 }}>
+                    Debug: {JSON.stringify(result, null, 2)}
+                  </Typography>
+                  {result.model_name && (
                     <Box>
                       <Typography variant="body1">
                         <strong>Model:</strong> {result.model_name}
                       </Typography>
-                      <Typography variant="body2">
-                        <strong>Trust Score:</strong> {result.trust_score?.toFixed(1)}/100
+                    </Box>
+                  )}
+                  {result.response && (
+                    <Box sx={{ mt: 2, p: 2, bgcolor: 'background.paper', borderRadius: 1 }}>
+                      <Typography variant="body2" gutterBottom>
+                        <strong>Model Response:</strong>
                       </Typography>
-                      <Typography variant="body2">
-                        <strong>Reason:</strong> {result.reason}
-                      </Typography>
-                      <Typography variant="body2">
-                        <strong>Est. Latency:</strong> {result.estimated_latency}ms
-                      </Typography>
-                      <Typography variant="body2">
-                        <strong>Cost:</strong> ${result.cost_per_1k?.toFixed(4)}/1K
-                      </Typography>
-                      <Typography variant="caption" color="textSecondary">
-                        <strong>TX:</strong> {result.blockchain_tx}
+                      <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap' }}>
+                        {result.response}
                       </Typography>
                     </Box>
-                  ) : (
+                  )}
+                  {result.success === false && (
                     <Box>
                       <Typography color="error">{result.error}</Typography>
                       {result.suggestion && (

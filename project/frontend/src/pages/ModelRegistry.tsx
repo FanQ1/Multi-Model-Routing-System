@@ -31,12 +31,11 @@ interface Model {
   capability_ranks: {
     math: number
     code: number
-    if: number
+    if_rank: number
     expert: number
     safety: number
   }
-  capability_matrix: number[][]
-  capabilities: string[]
+  capability_vector: number[]
   max_tokens: number
   avg_latency_ms: number
   cost_per_1k_usd: number
@@ -56,7 +55,7 @@ const ModelRegistry = () => {
     capability_ranks: {
       math: 1,
       code: 1,
-      if: 1,
+      if_rank: 1,
       expert: 1,
       safety: 1
     },
@@ -73,7 +72,11 @@ const ModelRegistry = () => {
   const fetchModels = async () => {
     try {
       const response = await modelRegistryAPI.getModels()
-      setModels(response.data)
+      if (response.data.success) {
+        setModels(response.data.data)
+      } else {
+        console.error('Failed to fetch models:', response.data.message)
+      }
     } catch (error) {
       console.error('Failed to fetch models:', error)
     } finally {
@@ -84,11 +87,15 @@ const ModelRegistry = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      await modelRegistryAPI.registerModel({
+      const response = await modelRegistryAPI.registerModel({
         ...formData
       })
-      setOpen(false)
-      fetchModels()
+      if (response.data.success) {
+        setOpen(false)
+        fetchModels()
+      } else {
+        console.error('Failed to register model:', response.data.message)
+      }
     } catch (error) {
       console.error('Failed to register model:', error)
     }
@@ -96,8 +103,12 @@ const ModelRegistry = () => {
 
   const handleVerify = async (modelId: string) => {
     try {
-      await modelRegistryAPI.verifyModel(modelId)
-      fetchModels()
+      const response = await modelRegistryAPI.verifyModel(modelId)
+      if (response.data.success) {
+        fetchModels()
+      } else {
+        console.error('Failed to verify model:', response.data.message)
+      }
     } catch (error) {
       console.error('Failed to verify model:', error)
     }
@@ -122,7 +133,7 @@ const ModelRegistry = () => {
             <TableHead>
               <TableRow>
                 <TableCell>Model Name</TableCell>
-                <TableCell>Capabilities</TableCell>
+                <TableCell>Capability Ranks</TableCell>
                 <TableCell>Max Tokens</TableCell>
                 <TableCell>Avg Latency</TableCell>
                 <TableCell>Cost/1K</TableCell>
@@ -150,15 +161,19 @@ const ModelRegistry = () => {
                   <TableRow key={model.id}>
                     <TableCell>{model.name}</TableCell>
                     <TableCell>
-                      {model.capabilities.map((cap) => (
-                        <Chip key={cap} label={cap} size="small" sx={{ mr: 0.5 }} />
-                      ))}
+                      <Box sx={{ fontSize: '0.875rem' }}>
+                        Math: {model.capability_ranks?.math ?? 'N/A'}<br />
+                        Code: {model.capability_ranks?.code ?? 'N/A'}<br />
+                        IF: {model.capability_ranks?.if_rank ?? 'N/A'}<br />
+                        Expert: {model.capability_ranks?.expert ?? 'N/A'}<br />
+                        Safety: {model.capability_ranks?.safety ?? 'N/A'}
+                      </Box>
                     </TableCell>
-                    <TableCell>{model.max_tokens.toLocaleString()}</TableCell>
-                    <TableCell>{model.avg_latency_ms}ms</TableCell>
-                    <TableCell>${model.cost_per_1k_usd.toFixed(4)}</TableCell>
-                    <TableCell>{model.stake_eth.toFixed(2)}</TableCell>
-                    <TableCell>{model.trust_score.toFixed(1)}/100</TableCell>
+                    <TableCell>{model.max_tokens ? model.max_tokens.toLocaleString() : 'N/A'}</TableCell>
+                    <TableCell>{model.avg_latency_ms ? `${model.avg_latency_ms}ms` : 'N/A'}</TableCell>
+                    <TableCell>{model.cost_per_1k_usd ? `$${model.cost_per_1k_usd.toFixed(4)}` : 'N/A'}</TableCell>
+                    <TableCell>{model.stake_eth ? model.stake_eth.toFixed(2) : 'N/A'}</TableCell>
+                    <TableCell>{model.trust_score ? `${model.trust_score.toFixed(1)}/100` : 'N/A'}</TableCell>
                     <TableCell>
                       {model.is_verified ? (
                         <Chip 
@@ -203,13 +218,64 @@ const ModelRegistry = () => {
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={6}>
                 <TextField
                   fullWidth
-                  label="Capabilities (comma-separated)"
-                  placeholder="e.g., coding, writing, math"
-                  value={formData.capabilities}
-                  onChange={(e) => setFormData({ ...formData, capabilities: e.target.value })}
+                  label="Math Rank"
+                  type="number"
+                  value={formData.capability_ranks.math}
+                  onChange={(e) => setFormData({ 
+                    ...formData, 
+                    capability_ranks: { ...formData.capability_ranks, math: parseInt(e.target.value) } 
+                  })}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  fullWidth
+                  label="Code Rank"
+                  type="number"
+                  value={formData.capability_ranks.code}
+                  onChange={(e) => setFormData({ 
+                    ...formData, 
+                    capability_ranks: { ...formData.capability_ranks, code: parseInt(e.target.value) } 
+                  })}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  fullWidth
+                  label="IF Rank"
+                  type="number"
+                  value={formData.capability_ranks.if_rank}
+                  onChange={(e) => setFormData({ 
+                    ...formData, 
+                    capability_ranks: { ...formData.capability_ranks, if_rank: parseInt(e.target.value) } 
+                  })}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  fullWidth
+                  label="Expert Rank"
+                  type="number"
+                  value={formData.capability_ranks.expert}
+                  onChange={(e) => setFormData({ 
+                    ...formData, 
+                    capability_ranks: { ...formData.capability_ranks, expert: parseInt(e.target.value) } 
+                  })}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  fullWidth
+                  label="Safety Rank"
+                  type="number"
+                  value={formData.capability_ranks.safety}
+                  onChange={(e) => setFormData({ 
+                    ...formData, 
+                    capability_ranks: { ...formData.capability_ranks, safety: parseInt(e.target.value) } 
+                  })}
                 />
               </Grid>
               <Grid item xs={6}>
@@ -235,7 +301,9 @@ const ModelRegistry = () => {
                   fullWidth
                   label="Cost per 1K Tokens (USD)"
                   type="number"
-                  step="0.0001"
+                  inputProps={{
+                    step: "0.0001"
+                  }}
                   value={formData.cost_per_1k_usd}
                   onChange={(e) => setFormData({ ...formData, cost_per_1k_usd: parseFloat(e.target.value) })}
                 />
@@ -245,7 +313,9 @@ const ModelRegistry = () => {
                   fullWidth
                   label="Stake (ETH)"
                   type="number"
-                  step="0.1"
+                  inputProps={{
+                    step: "0.1"
+                  }}
                   value={formData.stake_eth}
                   onChange={(e) => setFormData({ ...formData, stake_eth: parseFloat(e.target.value) })}
                 />

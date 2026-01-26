@@ -21,7 +21,7 @@ export const modelRegistryAPI = {
 // Routing API
 export const routingAPI = {
   routeQuery: (query: string, capability?: string) => 
-    api.post('/route', null, { params: { query, capability } }),
+    api.post('/route', { query, capability }),
   getStats: (hours: number = 24) => api.get('/routing/stats', { params: { hours } }),
   commitBatch: (period: string) => api.post('/routing/commit-batch', null, { params: { period } }),
 }

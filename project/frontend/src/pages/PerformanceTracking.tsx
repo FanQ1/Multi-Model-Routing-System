@@ -64,7 +64,11 @@ const PerformanceTracking = () => {
   const fetchModels = async () => {
     try {
       const response = await modelRegistryAPI.getModels()
-      setModels(response.data)
+      if (response.data.success) {
+        setModels(response.data.data)
+      } else {
+        console.error('Failed to fetch models:', response.data.message)
+      }
     } catch (error) {
       console.error('Failed to fetch models:', error)
     } finally {
@@ -75,8 +79,12 @@ const PerformanceTracking = () => {
   const fetchRecords = async (modelId: string) => {
     try {
       const response = await performanceAPI.getModelPerformance(modelId)
-      setRecords(response.data.records)
-      setSelectedModel(modelId)
+      if (response.data.success) {
+        setRecords(response.data.data.records || [])
+        setSelectedModel(modelId)
+      } else {
+        console.error('Failed to fetch performance records:', response.data.message)
+      }
     } catch (error) {
       console.error('Failed to fetch performance records:', error)
     }
@@ -85,10 +93,14 @@ const PerformanceTracking = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      await performanceAPI.reportPerformance(formData)
-      setOpen(false)
-      if (selectedModel) {
-        fetchRecords(selectedModel)
+      const response = await performanceAPI.reportPerformance(formData)
+      if (response.data.success) {
+        setOpen(false)
+        if (selectedModel) {
+          fetchRecords(selectedModel)
+        }
+      } else {
+        console.error('Failed to report performance:', response.data.message)
       }
     } catch (error) {
       console.error('Failed to report performance:', error)
