@@ -45,6 +45,9 @@ class CapabilityService:
 
                 print("Initialized model rank matrix with default models.")
 
+            print("Model list initialized:", self.model_list)
+            print("Model rank matrix initialized:", self.model_rank_matrix)
+            print("Model ability matrix initialized:", self.model_ability_matrix)
         except Exception as e:
             print(f"Error initializing model rank matrix: {e}")
             raise e
@@ -204,9 +207,16 @@ class CapabilityService:
         
         ability_matrix = []
         
-        for ranks in self.model_rank_matrix:
-            # 计算原始分数
-            raw_scores = calculate_scores(ranks)
+        # 将排名矩阵转换为numpy数组并转置
+        rank_matrix = np.array(self.model_rank_matrix)
+        
+        # 转置后，每一行代表一个领域，每一列代表一个模型
+        transposed = rank_matrix.T
+        
+        # 对每个领域（转置后的每一行）计算能力值
+        for domain_ranks in transposed:
+            # 计算该领域所有模型的能力值
+            raw_scores = calculate_scores(domain_ranks.tolist())
             
             # 缩放到目标范围
             max_score = max(raw_scores)
@@ -214,6 +224,7 @@ class CapabilityService:
             
             ability_matrix.append(scaled_scores)
         
-        return np.array(ability_matrix)
+        # 转置回来，恢复为 n x 5 的矩阵
+        return np.array(ability_matrix).T
 # 全局能力服务实例
 capability_service = CapabilityService()

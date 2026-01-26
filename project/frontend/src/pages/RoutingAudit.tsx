@@ -26,6 +26,12 @@ interface RoutingStats {
   top_models: Array<{ model: string; requests: number }>
 }
 
+interface Message {
+  role: 'user' | 'assistant'
+  content: string
+  model_name?: string
+}
+
 interface RoutingResult {
   success: boolean
   model_id?: string
@@ -44,7 +50,7 @@ const RoutingAudit = () => {
   const [stats, setStats] = useState<RoutingStats | null>(null)
   const [query, setQuery] = useState('')
   const [capability, setCapability] = useState('')
-  const [result, setResult] = useState<RoutingResult | null>(null)
+  const [messages, setMessages] = useState<Message[]>([])
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
@@ -63,24 +69,42 @@ const RoutingAudit = () => {
   const handleRoute = async () => {
     if (!query.trim()) return
 
+    // 添加用户消息
+    const userMessage: Message = {
+      role: 'user',
+      content: query
+    }
+    setMessages(prev => [...prev, userMessage])
+    
     setLoading(true)
     try {
       const response = await routingAPI.routeQuery(query, capability || undefined)
-      console.log('Full response:', response)
-      console.log('Response data:', response.data)
       // 正确处理后端返回的响应数据
       if (response.data && response.data.success) {
-        console.log('Setting result with data:', response.data.data)
-        setResult(response.data.data)
+        const assistantMessage: Message = {
+          role: 'assistant',
+          content: response.data.data.response || '',
+          model_name: response.data.data.model_name
+        }
+        setMessages(prev => [...prev, assistantMessage])
       } else {
-        console.log('Setting result with full data:', response.data)
-        setResult(response.data)
+        const errorMessage: Message = {
+          role: 'assistant',
+          content: response.data?.error || '请求失败'
+        }
+        setMessages(prev => [...prev, errorMessage])
       }
       fetchStats() // Refresh stats after routing
     } catch (error) {
       console.error('Failed to route query:', error)
+      const errorMessage: Message = {
+        role: 'assistant',
+        content: '请求失败，请重试'
+      }
+      setMessages(prev => [...prev, errorMessage])
     } finally {
       setLoading(false)
+      setQuery('')
     }
   }
 
@@ -140,42 +164,33 @@ const RoutingAudit = () => {
                 {loading ? 'Routing...' : 'Route Query'}
               </Button>
 
-              {result && (
-                <Box sx={{ mt: 3 }}>
-                  <Typography variant="h6" gutterBottom>
-                    Routing Result
-                  </Typography>
-                  {/* 调试信息 */}
-                  <Typography variant="caption" color="textSecondary" sx={{ display: 'block', mb: 1 }}>
-                    Debug: {JSON.stringify(result, null, 2)}
-                  </Typography>
-                  {result.model_name && (
-                    <Box>
-                      <Typography variant="body1">
-                        <strong>Model:</strong> {result.model_name}
-                      </Typography>
-                    </Box>
-                  )}
-                  {result.response && (
-                    <Box sx={{ mt: 2, p: 2, bgcolor: 'background.paper', borderRadius: 1 }}>
-                      <Typography variant="body2" gutterBottom>
-                        <strong>Model Response:</strong>
-                      </Typography>
-                      <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap' }}>
-                        {result.response}
-                      </Typography>
-                    </Box>
-                  )}
-                  {result.success === false && (
-                    <Box>
-                      <Typography color="error">{result.error}</Typography>
-                      {result.suggestion && (
-                        <Typography variant="body2" color="textSecondary">
-                          {result.suggestion}
-                        </Typography>
+              {/* 对话历史 */}
+              {messages.length > 0 && (
+                <Box sx={{ mt: 3, maxHeight: '400px', overflow: 'auto' }}>
+                  {messages.map((msg, index) => (
+                    <Box key={index} sx={{ mb: 2 }}>
+                      {msg.role === 'user' ? (
+                        <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                          <Paper sx={{ p: 2, bgcolor: 'primary.main', color: 'white', maxWidth: '70%' }}>
+                            <Typography variant="body1">{msg.content}</Typography>
+                          </Paper>
+                        </Box>
+                      ) : (
+                        <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
+                          <Paper sx={{ p: 2, bgcolor: '#2d3748', color: 'white', maxWidth: '70%' }}>
+                            {msg.model_name && (
+                              <Typography variant="caption" color="rgba(255,255,255,0.7)" sx={{ display: 'block', mb: 1 }}>
+                                模型: {msg.model_name}
+                              </Typography>
+                            )}
+                            <Typography variant="body1" sx={{ whiteSpace: 'pre-wrap' }}>
+                              {msg.content}
+                            </Typography>
+                          </Paper>
+                        </Box>
                       )}
                     </Box>
-                  )}
+                  ))}
                 </Box>
               )}
             </CardContent>

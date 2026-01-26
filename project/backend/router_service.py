@@ -55,7 +55,7 @@ class RouterService:
             q_vector = self.q_encoder.forward(embedding_vector)
             # 2. get available models from capability_service
             model_list = capability_service.get_model_list()
-            model_abilities = capability_service.get_model_rank_matrix()
+            model_abilities = capability_service.get_model_ability_matrix()
 
             # 3. inference to get top-k models
             models_asc = []
@@ -64,11 +64,13 @@ class RouterService:
                 m_vector = self.m_encoder.forward(m_input_tensor).squeeze()
                 # 3.1 calculate similarity score
                 score = torch.dot(q_vector, m_vector).item()
-                models_asc.append(model_list[i])
+                models_asc.append((model_list[i], score))
+                print(f"Model: {model_list[i]}, Score: {score}")
 
             models_asc.sort(key=lambda x: x[1], reverse=True)
+            print("Models sorted by score:", models_asc)
 
-            return models_asc[:2] # return top-2 models
+            return [model[0] for model in models_asc[0:2]] # return top-2 models
 
        
     def get_response_from_model(self, user_query: str, best_model: list[str]) :
