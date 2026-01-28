@@ -8,8 +8,8 @@ from typing import List, Dict
 from venv import logger
 import numpy as np
 from schema import ApiResponse
-from database import SessionLocal, Model
-from models import ModelInfo
+from project.backend.entity.database import SessionLocal, Model
+from project.backend.entity.models import ModelInfo
 
 class CapabilityService:
     """能力矩阵服务类"""

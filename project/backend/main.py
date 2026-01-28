@@ -4,14 +4,15 @@ from fastapi.middleware.cors import CORSMiddleware
 from typing import List, Optional
 import uvicorn
 
-from models import (
+from project.backend.entity.models import (
     ModelRegistration, ModelInfo, RoutingDecision, RoutingBatch,
     PerformanceReport, ViolationReport, TrustScoreUpdate, CapabilityRanks
 )
 # from blockchain_service import blockchain
-from router_service import router
-from capability_service import capability_service
-from database import init_db, get_db, Model, RoutingRecord, PerformanceRecord, ViolationRecord
+from project.backend.service.router_service import router
+from project.backend.service.capability_service import capability_service
+from project.backend.service.memory_manager import memory_manager
+from project.backend.entity.database import init_db, get_db, Model, RoutingRecord, PerformanceRecord, ViolationRecord
 from sqlalchemy.orm import Session
 from schema import ApiResponse
 
@@ -224,8 +225,9 @@ async def get_response(request: dict):
     """
     try:
         query = request.get("query", "")
-        res_model = router.route_query(query)
-        response = router.get_response_from_model(query, res_model)
+        rewrite_query = memory_manager.retrieve_memory(query)
+        res_model = router.route_query(query) # use orginal query to route beacause the rewrite may change the meaning
+        response = router.get_response_from_model(rewrite_query, res_model)
         return ApiResponse(
             success=True,
             message="路由成功",
@@ -382,82 +384,7 @@ async def get_model_violations(model_id: str, limit: int = 100):
         data={}
     )
 
-# ============ Trust Score Endpoints ============
 
-# @app.get("/api/trust-scores")
-# async def get_all_trust_scores(db: Session = Depends(get_db)):
-#     """Get trust scores for all models"""
-#     models = db.query(Model).all()
-#     return [
-#         {
-#             "model_id": m.id,
-#             "model_name": m.name,
-#             "trust_score": m.trust_score,
-#             "is_verified": m.is_verified,
-#             "violations": m.violations
-#         }
-#         for m in models
-#     ]
-
-# @app.get("/api/trust-scores/{model_id}")
-# async def get_model_trust_score(model_id: str, db: Session = Depends(get_db)):
-#     """Get trust score for a specific model"""
-#     model = db.query(Model).filter(Model.id == model_id).first()
-#     if not model:
-#         raise HTTPException(status_code=404, detail="Model not found")
-
-#     return {
-#         "model_id": model.id,
-#         "model_name": model.name,
-#         "trust_score": model.trust_score,
-#         "is_verified": model.is_verified,
-#         "violations": model.violations,
-#         "registration_time": model.registration_time,
-#         "capabilities": model.capabilities.split(",")
-#     }
-
-# # ============ Dashboard Endpoints ============
-
-# @app.get("/api/dashboard/overview")
-# async def get_dashboard_overview(db: Session = Depends(get_db)):
-#     """Get dashboard overview data"""
-#     total_models = db.query(Model).count()
-#     verified_models = db.query(Model).filter(Model.is_verified == True).count()
-#     total_violations = db.query(ViolationRecord).count()
-
-#     # Get recent performance records
-#     recent_performance = db.query(PerformanceRecord).order_by(
-#         PerformanceRecord.report_time.desc()
-#     ).limit(10).all()
-
-#     # Get top models by trust score
-#     top_models = db.query(Model).order_by(
-#         Model.trust_score.desc()
-#     ).limit(5).all()
-
-#     return {
-#         "total_models": total_models,
-#         "verified_models": verified_models,
-#         "total_violations": total_violations,
-#         "recent_performance": [
-#             {
-#                 "model_id": p.model_id,
-#                 "period": p.period,
-#                 "avg_latency_ms": p.avg_latency_ms,
-#                 "success_rate": p.success_rate
-#             }
-#             for p in recent_performance
-#         ],
-#         "top_models": [
-#             {
-#                 "model_id": m.id,
-#                 "name": m.name,
-#                 "trust_score": m.trust_score,
-#                 "is_verified": m.is_verified
-#             }
-#             for m in top_models
-#         ]
-#     }
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)

@@ -3,15 +3,28 @@
 2. router选择模型 完成
 3. 多轮对话
     - 用户可以做多组对话，且每组对话均为多轮对话
-    - 多轮对话流程：
-    query -> rewrite query -> reconstructed query(based on db and context window) -> router -> model -> response -> reconstructe db and context window -> user
-        1.对于重构query和修改数据库，均由memory_manager对象完成. 改对象类似aop增强功能
-        2.数据库的重构分为四种操作：ADD, UPDATE, DELETE, NOOP.数据库存储用户和model的每一组对话，但包含去重。如果是已有的内容，则执行NOOP。如果出现新内容，则ADD，如果对已有内容的更新，则UPDATE，如果是对已有内容的颠覆，则DELETE
-        3.重构query会根据数据库匹配的结果和context window选择重构方式
+    - 多轮对话流程：query -> rewrite query  -> router -> model -> response
+        0. 首先进行重写，将当前的查询、局部上下文（短期记忆）、检索数据库（长期记忆）得到的内容和全文摘要拼接重写
+        1. 将重构query经过router，发送到对应的model，得到response
+        2. router路由的是原始query
+    - 对于生成摘要 & 更新数据库：
+        0. 整个过程是异步的，由memory_manager对象
+        1. 在得到(query, response)的消息对后，和局部上下文、全文摘要进行拼接，进行提取
+        2. 根据提取的内容，判断是否要更新数据库。
+    - 对于数据库：
+        1. 数据库的重构分为四种操作：ADD, UPDATE, DELETE, NOOP.数据库存储用户和model的每一组对话，但包含去重。如果是已有的内容，则执行NOOP。如果出现新内容，则ADD，如果对已有内容的更新，则UPDATE，如果是对已有内容的颠覆，则DELETE
+
 4. 可能的问题
     - context window的设计即滑动窗口，保存一个固定长度的窗口。
     - 对于重构query，可能会导致query的意图改变。例如：第一轮为询问算法原理，第二轮为写具体算法，第三步为询问代码细节，最后一步为原理中的数学证明（example：这个算法的上限是由怎么由数学证明得到的？）
     - 数据库的操作比例，分别为多少？可不可以针对执行多的操作进行优化，或者删去不需要的操作？
+
+5. 评估标准
+    - 单跳推理：要求代理能够直接从某一次特定的交流中找到明确的事实。
+    - 多跳推理：要求代理能够将跨越不同时间或会话的多个不相关事实联系起来，以形成一个完整的答案
+    - 开放域：测试系统将对话记忆与通用世界知识相结合的能力。例如，询问“用户在对话中提到的爱好涉及哪项运动，这项运动是何时被列入奥运会的？”
+    - 时序：这类问题要求代理能够理解事件的先后顺序和时间关系
+
 
 ### 模型能力排名
 gemini-2.5-pro [11,30,11,15,29]
