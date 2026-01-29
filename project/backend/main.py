@@ -1,4 +1,5 @@
 
+import uuid
 from fastapi import FastAPI, HTTPException, Depends, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from typing import List, Optional
@@ -12,7 +13,7 @@ from project.backend.entity.models import (
 from project.backend.service.router_service import router
 from project.backend.service.capability_service import capability_service
 from project.backend.service.memory_manager import memory_manager
-from project.backend.entity.database import init_db, get_db, Model, RoutingRecord, PerformanceRecord, ViolationRecord
+from project.backend.entity.database import Conversation, init_db, get_db, Model, RoutingRecord, PerformanceRecord, ViolationRecord
 from sqlalchemy.orm import Session
 from schema import ApiResponse
 
@@ -215,17 +216,94 @@ async def verify_model(model_id: str, db: Session = Depends(get_db)):
         }
     )
 
-# ============ Routing Endpoints ============
+# ============ chat and routing ============
+@app.post("/api/chat")
+async def get_all_conversations(
+    db: Session = Depends(get_db)
+):
+    """
+    Get all conversations from the database
+    """
+    try:
+        conversation_ids = memory_manager.get_all_conversations(db=db)
+        return ApiResponse(
+            success=True,
+            message="获取会话成功",
+            data={"conversation_ids": conversation_ids}
+        )
+    except Exception as e:
+        return ApiResponse(
+            success=False,
+            message="获取会话失败",
+            data={
+                "error": str(e)
+            }
+        )
 
-@app.post("/api/route")
-async def get_response(request: dict):
+@app.post("/api/chat/register-conversation")
+async def register_conversation(
+    db: Session = Depends(get_db)
+):
+    """
+    Register a new conversation
+    """
+    try:
+        memory_manager.register_conversation(db=db)
+        return ApiResponse(
+            success=True,
+            message="注册会话成功", 
+            data={
+                
+            }
+        )
+    except Exception as e:
+        return ApiResponse(
+            success=False,
+            message="注册会话失败",
+            data={
+                "error": str(e)
+            }
+        )
+
+@app.post("/api/route/get-conversation")
+async def get_memory(
+    conversation_id: uuid.UUID,
+    db: Session = Depends(get_db)
+):
+    """
+    Get all memories from the vector database
+    every time when user opens a new session, we load all memories from vector db
+    """
+    try:
+        memories_history = memory_manager.load_existing_memories(conversation_id=conversation_id, db=db)
+        return ApiResponse(
+            success=True,
+            message="获取记忆成功",
+            data={
+                "memories": memories_history
+            }
+        )
+    except Exception as e:
+        return ApiResponse(
+            success=False,
+            message="获取记忆失败",
+            data={
+                "error": str(e)
+            }
+        )
+
+@app.post("/api/chat/route")
+async def get_response(
+    request: dict,
+    db: Session = Depends(get_db)
+):
     """
     Route a user query to the best available model
     return the answer 
     """
     try:
         query = request.get("query", "")
-        rewrite_query = memory_manager.retrieve_memory(query)
+        rewrite_query = memory_manager.rewrite_query(query, db)
         res_model = router.route_query(query) # use orginal query to route beacause the rewrite may change the meaning
         response = router.get_response_from_model(rewrite_query, res_model)
         return ApiResponse(

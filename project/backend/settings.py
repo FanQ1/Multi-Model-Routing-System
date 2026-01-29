@@ -8,3 +8,6 @@ class Settings:
 
     def get_postgresql_url(self):
         return self.postgresql_url
+    
+    def get_qdrant_url(self):
+        return "http://localhost:6333"

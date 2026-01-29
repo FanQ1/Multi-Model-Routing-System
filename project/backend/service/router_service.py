@@ -16,7 +16,9 @@ from router.encoder.M_encoder import MSpaceEncode
 from project.backend.service.capability_service import capability_service
 
 class RouterService:
-
+    """
+    includes methods for routing, calling models, etc.
+    """
     def __init__(self):
         self.client = ZhipuAI(api_key=Settings().get_api())
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -72,7 +74,6 @@ class RouterService:
 
             return [model[0] for model in models_asc[0:2]] # return top-2 models
 
-       
     def get_response_from_model(self, user_query: str, best_model: list[str]) :
         """
         get response from the best available model for a user query.
@@ -84,7 +85,7 @@ class RouterService:
         # 1. call LLM to get response. we use one round interaction here.
         # need to be multiple round interaction in production
         try:
-            print("Best model selected:", best_model[0], "for the query:", user_query)
+            # print("Best model selected:", best_model[0], "for the query:", user_query)
             response = self.client.chat.completions.create(
                 model='glm-4',
                 messages=[

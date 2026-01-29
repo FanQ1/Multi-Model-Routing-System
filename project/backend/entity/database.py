@@ -1,5 +1,5 @@
 
-from sqlalchemy import create_engine, Column, String, Integer, JSON, Float, Boolean, DateTime, Text
+from sqlalchemy import UUID, create_engine, Column, String, Integer, JSON, Float, Boolean, DateTime, Text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime
@@ -29,6 +29,50 @@ class Model(Base):
     trust_score = Column(Float, default=50.0)
     violations = Column(Integer, default=0)
     registration_time = Column(DateTime, default=datetime.utcnow)
+
+# user
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(UUID, primary_key=True, index=True)
+    username = Column(String, unique=True, index=True)
+    password = Column(String)
+    is_active = Column(Boolean, default=True)
+
+# ==================memory related records========================
+class Message(Base):
+    __tablename__ = "messages"
+
+    id = Column(UUID, primary_key=True, index=True)
+    message_type = Column(String, index=True)  # user or assistant
+    content = Column(Text)
+    timestamp = Column(DateTime, default=datetime.utcnow)
+    
+class Conversation(Base):
+    __tablename__ = "conversations"
+
+    id = Column(UUID, primary_key=True, index=True)
+    conversation_summary = Column(Text)
+    last_updated = Column(DateTime, default=datetime.utcnow)
+
+class ConversationMessageLink(Base):
+    # one conversation can have multiple messages
+    __tablename__ = "conversation_message_links"
+
+    id = Column(UUID, primary_key=True, index=True)
+    conversation_id = Column(UUID, index=True)
+    message_id = Column(UUID, index=True)
+    timestamp = Column(DateTime, default=datetime.utcnow)
+
+class ConversationUserLink(Base):
+    # one user can have multiple conversations
+    __tablename__ = "conversation_user_links"
+
+    id = Column(UUID, primary_key=True, index=True)
+    conversation_id = Column(UUID, index=True)
+    user_id = Column(UUID, index=True)
+
+
 
 class RoutingRecord(Base):
     __tablename__ = "routing_records"
@@ -61,7 +105,6 @@ class ViolationRecord(Base):
     severity = Column(String)
     slash_amount_eth = Column(Float)
     report_time = Column(DateTime, default=datetime.utcnow)
-
 # Database initialization
 def init_db():
     """Initialize the database by creating all tables"""
