@@ -4,16 +4,15 @@ from datetime import datetime
 import json
 
 import torch
-from project.backend.service.blockchain_service import blockchain
 # import encoder and inference scripts
 import sys
 import os
 from zhipuai import ZhipuAI
 from settings import Settings
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..', 'router'))
-from router.encoder.Q_encoder import QSpaceEncode
-from router.encoder.M_encoder import MSpaceEncode
-from project.backend.service.capability_service import capability_service
+from ..router.Q_encoder import QSpaceEncode
+from ..router.M_encoder import MSpaceEncode
+from capability_service import capability_service
 
 class RouterService:
     """

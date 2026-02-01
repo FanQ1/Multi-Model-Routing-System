@@ -8,6 +8,7 @@ import ModelRegistry from './pages/ModelRegistry'
 import RoutingAudit from './pages/RoutingAudit'
 import PerformanceTracking from './pages/PerformanceTracking'
 import TrustScores from './pages/TrustScores'
+import Chat from './pages/Chat'
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/routing" element={<RoutingAudit />} />
           <Route path="/performance" element={<PerformanceTracking />} />
           <Route path="/trust" element={<TrustScores />} />
+          <Route path="/chat" element={<Chat />} />
         </Routes>
       </Container>
     </Box>

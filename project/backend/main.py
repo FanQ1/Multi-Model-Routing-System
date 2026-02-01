@@ -5,15 +5,15 @@ from fastapi.middleware.cors import CORSMiddleware
 from typing import List, Optional
 import uvicorn
 
-from project.backend.entity.models import (
+from entity.models import (
     ModelRegistration, ModelInfo, RoutingDecision, RoutingBatch,
     PerformanceReport, ViolationReport, TrustScoreUpdate, CapabilityRanks
 )
 # from blockchain_service import blockchain
-from project.backend.service.router_service import router
-from project.backend.service.capability_service import capability_service
-from project.backend.service.memory_manager import memory_manager
-from project.backend.entity.database import Conversation, init_db, get_db, Model, RoutingRecord, PerformanceRecord, ViolationRecord
+from service.router_service import router
+from service.capability_service import capability_service
+from service.memory_manager import memory_manager
+from entity.database import Conversation, init_db, get_db, Model, RoutingRecord, PerformanceRecord, ViolationRecord
 from sqlalchemy.orm import Session
 from schema import ApiResponse
 
