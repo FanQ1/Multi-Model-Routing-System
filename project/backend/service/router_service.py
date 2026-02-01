@@ -9,10 +9,9 @@ import sys
 import os
 from zhipuai import ZhipuAI
 from settings import Settings
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..', 'router'))
-from ..router.Q_encoder import QSpaceEncode
-from ..router.M_encoder import MSpaceEncode
-from capability_service import capability_service
+from router.Q_encoder import QSpaceEncode
+from router.M_encoder import MSpaceEncode
+from service.capability_service import capability_service
 
 class RouterService:
     """

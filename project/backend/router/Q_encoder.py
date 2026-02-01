@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from Llm_client import LLM
+from .Llm_client import LLM
 
 class QSpaceEncode(nn.Module):
     """

@@ -4,12 +4,9 @@
 用于处理模型排名到能力矩阵的转换
 """
 
-from typing import List, Dict
-from venv import logger
+from typing import List
 import numpy as np
-from schema import ApiResponse
-from project.backend.entity.database import SessionLocal, Model
-from project.backend.entity.models import ModelInfo
+from entity.database import SessionLocal, Model
 
 class CapabilityService:
     """能力矩阵服务类"""

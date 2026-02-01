@@ -1,9 +1,8 @@
-from urllib import response
 import uuid
-from ..entity.database import Conversation, ConversationMessageLink, Message,SessionLocal
-from router_service import router
+from entity.database import Conversation, ConversationMessageLink, Message,SessionLocal
+from service.router_service import router
 from typing import List, Dict
-from ..entity.vector_db import vector_orm
+from entity.vector_db import vector_orm
 
 class MemoryManager:
     def __init__(self):
@@ -32,6 +31,7 @@ class MemoryManager:
             conversation = Conversation(id=uuid.uuid4())
             db.add(conversation)
             db.commit()
+            return str(conversation.id)
         except Exception as e:
             db.rollback()
             raise e
@@ -54,6 +54,8 @@ class MemoryManager:
                 
             self.work_memory = whole_messages[-(self.work_memory_limit * 2):]  # load into work memory with sliding window
             # return whole messages    
+            print("Loaded existing memories:", whole_messages)
+            print("Current work memory:", self.work_memory)
             return whole_messages
         except Exception as e:
             raise e
@@ -66,13 +68,13 @@ class MemoryManager:
         try:
             # 1. create context (Summary S, Recent Messages {m-m...}, Query)
             context_prompt = self._build_context_prompt(query)
-
+            print("Context Prompt for Rewriting Query:", context_prompt)
             # 2. call LLM to rewrite query
             response = router.get_response_from_model(
                 user_query=context_prompt,
                 best_model=['glm-4']
                 )
-            
+            print("Rewritten Query:", response)
             # 3. update work memory
             self._update_work_memory(user_msg=query, ai_msg=response)
 
@@ -101,7 +103,7 @@ class MemoryManager:
                 query=query,
                 top_k=self.top_k_similar_memories
             )
-
+            print("Relevant Long Term Memories for Context:", relevant_long_messages)
             return f"{summary}\nRecent Messages:\n{recent_messages}\n{relevant_long_messages}\nUser Query: {query}"
         except Exception as e:
             raise e
@@ -153,6 +155,7 @@ class MemoryManager:
             elif operation == "DELETE":
                 vector_orm.delete_memory(similar_memories[0].id)
 
+        
         self._async_update_summary()
 
         
@@ -166,6 +169,7 @@ class MemoryManager:
         # sliding window
         if len(self.work_memory) > self.work_memory_limit * 2: # *2 because each interaction has user and assistant messages
             self.work_memory = self.work_memory[-(self.work_memory_limit * 2):]
+        print("Updated work memory:", self.work_memory)
 
     def _async_update_summary(self):
         # TODO: 异步更新摘要

@@ -1,4 +1,4 @@
-from ..settings import Settings
+from settings import Settings
 from qdrant_client import QdrantClient
 from sentence_transformers import SentenceTransformer 
 import torch
@@ -69,10 +69,10 @@ class VectorDB:
         Search for similar vectors in the specified collection.
         
         """
-        vector = self.get_offline_embedding(query=query)
-        results = self.client.search(
+        vector = self.get_offline_embedding(query)
+        results = self.client.query_points(
             collection_name=collection_name,
-            query_vector=vector,
+            query=vector.tolist(),
             limit=top_k
         )
         return results

@@ -37,3 +37,6 @@ RANK = [
     [15, 13, 35],
     [29, 4, 8]
 ]
+
+uvicorn main:app --reload
+npm run dev

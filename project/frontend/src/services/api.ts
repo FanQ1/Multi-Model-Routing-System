@@ -55,7 +55,7 @@ export const dashboardAPI = {
 export const chatAPI = {
   getAllConversations: () => api.post('/chat'),
   registerConversation: () => api.post('/chat/register-conversation'),
-  getConversation: (conversationId: string) => api.post('/route/get-conversation', { conversation_id: conversationId }),
+  getConversation: (conversationId: string) => api.post('/route/get-conversation', null, { params: { conversation_id: conversationId } }),
   sendMessage: (query: string) => api.post('/chat/route', { query }),
 }
 

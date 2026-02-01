@@ -3,7 +3,7 @@ from sqlalchemy import UUID, create_engine, Column, String, Integer, JSON, Float
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime
-from ..settings import Settings
+from settings import Settings
 
 SQLALCHEMY_DATABASE_URL = Settings().get_postgresql_url()
 

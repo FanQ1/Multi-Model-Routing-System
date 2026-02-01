@@ -1,10 +1,9 @@
 from zhipuai import ZhipuAI
-from ..settings import Settings
-from ..logger import logger
+from settings import Settings
+from logger import logger
 
 from sentence_transformers import SentenceTransformer 
 import torch
-import torch.nn as nn
 class LLM:
     def __init__(self):
         self.client = ZhipuAI(api_key=Settings().get_api())

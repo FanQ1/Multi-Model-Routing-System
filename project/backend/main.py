@@ -1,19 +1,18 @@
 
 import uuid
-from fastapi import FastAPI, HTTPException, Depends, BackgroundTasks
+from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
-from typing import List, Optional
 import uvicorn
 
 from entity.models import (
-    ModelRegistration, ModelInfo, RoutingDecision, RoutingBatch,
-    PerformanceReport, ViolationReport, TrustScoreUpdate, CapabilityRanks
+    ModelRegistration, ModelInfo,
+    PerformanceReport, ViolationReport, CapabilityRanks
 )
 # from blockchain_service import blockchain
 from service.router_service import router
 from service.capability_service import capability_service
 from service.memory_manager import memory_manager
-from entity.database import Conversation, init_db, get_db, Model, RoutingRecord, PerformanceRecord, ViolationRecord
+from entity.database import init_db, get_db, Model
 from sqlalchemy.orm import Session
 from schema import ApiResponse
 
@@ -248,12 +247,12 @@ async def register_conversation(
     Register a new conversation
     """
     try:
-        memory_manager.register_conversation(db=db)
+        conversation_id = memory_manager.register_conversation(db=db)
         return ApiResponse(
             success=True,
             message="注册会话成功", 
             data={
-                
+                "conversation_id": conversation_id
             }
         )
     except Exception as e:
@@ -303,9 +302,13 @@ async def get_response(
     """
     try:
         query = request.get("query", "")
+        print("Received user query:", query)
         rewrite_query = memory_manager.rewrite_query(query, db)
+        print("Rewritten user query:", rewrite_query)
         res_model = router.route_query(query) # use orginal query to route beacause the rewrite may change the meaning
+        print("Routed to model:", res_model)
         response = router.get_response_from_model(rewrite_query, res_model)
+        print("Final response from model:", response)
         return ApiResponse(
             success=True,
             message="路由成功",

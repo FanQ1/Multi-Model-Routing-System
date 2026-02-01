@@ -183,20 +183,22 @@ const Chat = () => {
                 <CircularProgress />
               </Box>
             ) : (
-              conversations.map((conv) => (
-                <ListItem key={conv.id} disablePadding>
-                  <ListItemButton
-                    selected={selectedConversation?.id === conv.id}
-                    onClick={() => setSelectedConversation(conv)}
-                    sx={{ borderRadius: 1, mb: 0.5 }}
-                  >
-                    <ListItemText
-                      primary={`对话 ${conv.id.slice(0, 8)}`}
-                      secondary={`${conv.messages.length} 条消息`}
-                    />
-                  </ListItemButton>
-                </ListItem>
-              ))}
+              conversations.map((conv) => {
+                return (
+                  <ListItem key={conv.id} disablePadding>
+                    <ListItemButton
+                      selected={selectedConversation?.id === conv.id}
+                      onClick={() => setSelectedConversation(conv)}
+                      sx={{ borderRadius: 1, mb: 0.5 }}
+                    >
+                      <ListItemText
+                        primary={`对话 ${conv.id.slice(0, 8)}`}
+                        secondary={`${conv.messages.length} 条消息`}
+                      />
+                    </ListItemButton>
+                  </ListItem>
+                );
+              })}
             )}
           </List>
           <Box sx={{ p: 2, borderTop: '1px solid', borderColor: 'divider' }}>

@@ -1,0 +1,131 @@
+2026-02-01 14:00:32,268 - INFO - Use pytorch device_name: cuda:0
+2026-02-01 14:00:32,268 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-01 14:00:35,061 - WARNING - Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`
+2026-02-01 14:00:40,187 - INFO - LLM init finished.
+2026-02-01 14:00:55,137 - INFO - Use pytorch device_name: cuda:0
+2026-02-01 14:00:55,137 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-01 14:00:58,989 - INFO - LLM init finished.
+2026-02-01 19:14:23,635 - INFO - Use pytorch device_name: cuda:0
+2026-02-01 19:14:23,636 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-01 19:14:27,481 - INFO - LLM init finished.
+2026-02-01 19:14:57,273 - INFO - Use pytorch device_name: cuda:0
+2026-02-01 19:14:57,273 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-01 19:15:00,982 - INFO - LLM init finished.
+2026-02-01 19:15:09,061 - INFO - Use pytorch device_name: cuda:0
+2026-02-01 19:15:09,061 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-01 19:17:28,198 - INFO - Use pytorch device_name: cuda:0
+2026-02-01 19:17:28,199 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-01 19:17:31,906 - INFO - LLM init finished.
+2026-02-01 19:17:38,363 - INFO - Use pytorch device_name: cuda:0
+2026-02-01 19:17:38,364 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-01 19:18:11,462 - INFO - Use pytorch device_name: cuda:0
+2026-02-01 19:18:11,462 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-01 19:18:15,102 - INFO - LLM init finished.
+2026-02-01 19:18:21,446 - INFO - Use pytorch device_name: cuda:0
+2026-02-01 19:18:21,446 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-01 19:21:54,755 - INFO - Use pytorch device_name: cuda:0
+2026-02-01 19:21:54,756 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-01 19:21:58,427 - INFO - LLM init finished.
+2026-02-01 19:22:00,577 - INFO - HTTP Request: GET http://localhost:6333 "HTTP/1.1 200 OK"
+2026-02-01 19:22:00,590 - INFO - Use pytorch device_name: cuda:0
+2026-02-01 19:22:00,590 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-01 19:23:21,482 - INFO - Use pytorch device_name: cuda:0
+2026-02-01 19:23:21,482 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-01 19:23:25,081 - INFO - LLM init finished.
+2026-02-01 19:23:27,224 - INFO - HTTP Request: GET http://localhost:6333 "HTTP/1.1 200 OK"
+2026-02-01 19:23:27,234 - INFO - Use pytorch device_name: cuda:0
+2026-02-01 19:23:27,234 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-01 19:27:31,215 - INFO - Use pytorch device_name: cuda:0
+2026-02-01 19:27:31,216 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-01 19:27:34,868 - INFO - LLM init finished.
+2026-02-01 19:27:37,175 - INFO - HTTP Request: GET http://localhost:6333 "HTTP/1.1 200 OK"
+2026-02-01 19:27:37,185 - INFO - Use pytorch device_name: cuda:0
+2026-02-01 19:27:37,186 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-01 20:05:52,157 - INFO - Use pytorch device_name: cuda:0
+2026-02-01 20:05:52,159 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-01 20:05:56,215 - INFO - LLM init finished.
+2026-02-01 20:05:58,528 - INFO - HTTP Request: GET http://localhost:6333 "HTTP/1.1 200 OK"
+2026-02-01 20:05:58,543 - INFO - Use pytorch device_name: cuda:0
+2026-02-01 20:05:58,543 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-01 20:07:25,799 - INFO - Use pytorch device_name: cuda:0
+2026-02-01 20:07:25,800 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-01 20:07:29,613 - INFO - LLM init finished.
+2026-02-01 20:07:31,678 - INFO - HTTP Request: GET http://localhost:6333 "HTTP/1.1 200 OK"
+2026-02-01 20:07:31,688 - INFO - Use pytorch device_name: cuda:0
+2026-02-01 20:07:31,688 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-01 20:08:17,594 - INFO - Use pytorch device_name: cuda:0
+2026-02-01 20:08:17,594 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-01 20:08:21,349 - INFO - LLM init finished.
+2026-02-01 20:08:23,454 - INFO - HTTP Request: GET http://localhost:6333 "HTTP/1.1 200 OK"
+2026-02-01 20:08:23,465 - INFO - Use pytorch device_name: cuda:0
+2026-02-01 20:08:23,465 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-01 20:12:24,837 - INFO - Use pytorch device_name: cuda:0
+2026-02-01 20:12:24,838 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-01 20:12:28,397 - INFO - LLM init finished.
+2026-02-01 20:12:30,479 - INFO - HTTP Request: GET http://localhost:6333 "HTTP/1.1 200 OK"
+2026-02-01 20:12:30,488 - INFO - Use pytorch device_name: cuda:0
+2026-02-01 20:12:30,488 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-01 20:21:34,959 - INFO - Use pytorch device_name: cuda:0
+2026-02-01 20:21:34,959 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-01 20:21:38,796 - INFO - LLM init finished.
+2026-02-01 20:21:41,193 - INFO - HTTP Request: GET http://localhost:6333 "HTTP/1.1 200 OK"
+2026-02-01 20:21:41,206 - INFO - Use pytorch device_name: cuda:0
+2026-02-01 20:21:41,207 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-01 20:23:26,488 - INFO - Use pytorch device_name: cuda:0
+2026-02-01 20:23:26,488 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-01 20:23:30,465 - INFO - LLM init finished.
+2026-02-01 20:23:32,739 - INFO - HTTP Request: GET http://localhost:6333 "HTTP/1.1 200 OK"
+2026-02-01 20:23:32,749 - INFO - Use pytorch device_name: cuda:0
+2026-02-01 20:23:32,750 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-01 20:26:29,430 - INFO - Use pytorch device_name: cuda:0
+2026-02-01 20:26:29,430 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-01 20:26:32,946 - INFO - LLM init finished.
+2026-02-01 20:26:35,027 - INFO - HTTP Request: GET http://localhost:6333 "HTTP/1.1 200 OK"
+2026-02-01 20:26:35,037 - INFO - Use pytorch device_name: cuda:0
+2026-02-01 20:26:35,037 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-01 20:29:23,122 - INFO - Use pytorch device_name: cuda:0
+2026-02-01 20:29:23,122 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-01 20:29:26,666 - INFO - LLM init finished.
+2026-02-01 20:29:28,829 - INFO - HTTP Request: GET http://localhost:6333 "HTTP/1.1 200 OK"
+2026-02-01 20:29:28,840 - INFO - Use pytorch device_name: cuda:0
+2026-02-01 20:29:28,840 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-01 20:30:05,127 - INFO - Use pytorch device_name: cuda:0
+2026-02-01 20:30:05,127 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-01 20:30:08,695 - INFO - LLM init finished.
+2026-02-01 20:30:10,872 - INFO - HTTP Request: GET http://localhost:6333 "HTTP/1.1 200 OK"
+2026-02-01 20:30:10,882 - INFO - Use pytorch device_name: cuda:0
+2026-02-01 20:30:10,882 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-01 20:30:24,503 - INFO - Use pytorch device_name: cuda:0
+2026-02-01 20:30:24,503 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-01 20:30:28,356 - INFO - LLM init finished.
+2026-02-01 20:30:30,451 - INFO - HTTP Request: GET http://localhost:6333 "HTTP/1.1 200 OK"
+2026-02-01 20:30:30,462 - INFO - Use pytorch device_name: cuda:0
+2026-02-01 20:30:30,462 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-01 20:36:13,403 - INFO - Use pytorch device_name: cuda:0
+2026-02-01 20:36:13,403 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-01 20:36:16,987 - INFO - LLM init finished.
+2026-02-01 20:36:19,154 - INFO - HTTP Request: GET http://localhost:6333 "HTTP/1.1 200 OK"
+2026-02-01 20:36:19,163 - INFO - Use pytorch device_name: cuda:0
+2026-02-01 20:36:19,163 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-01 20:43:42,161 - INFO - Use pytorch device_name: cuda:0
+2026-02-01 20:43:42,161 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-01 20:43:45,794 - INFO - LLM init finished.
+2026-02-01 20:43:48,141 - INFO - HTTP Request: GET http://localhost:6333 "HTTP/1.1 200 OK"
+2026-02-01 20:43:48,152 - INFO - Use pytorch device_name: cuda:0
+2026-02-01 20:43:48,152 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-01 20:46:34,760 - INFO - Use pytorch device_name: cuda:0
+2026-02-01 20:46:34,760 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-01 20:46:38,593 - INFO - LLM init finished.
+2026-02-01 20:46:41,129 - INFO - HTTP Request: GET http://localhost:6333 "HTTP/1.1 200 OK"
+2026-02-01 20:46:41,138 - INFO - Use pytorch device_name: cuda:0
+2026-02-01 20:46:41,138 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-01 20:46:59,827 - WARNING - Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`
+2026-02-01 20:47:12,362 - WARNING - Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`
+2026-02-01 20:47:26,205 - WARNING - Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`
+2026-02-01 21:46:28,832 - INFO - Use pytorch device_name: cuda:0
+2026-02-01 21:46:28,832 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-01 21:46:31,538 - WARNING - Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`
+2026-02-01 21:46:37,581 - INFO - LLM init finished.
+2026-02-01 21:46:40,134 - INFO - HTTP Request: GET http://localhost:6333 "HTTP/1.1 200 OK"
+2026-02-01 21:46:40,145 - INFO - Use pytorch device_name: cuda:0
+2026-02-01 21:46:40,145 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
