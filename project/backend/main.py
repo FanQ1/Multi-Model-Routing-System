@@ -302,13 +302,9 @@ async def get_response(
     """
     try:
         query = request.get("query", "")
-        print("Received user query:", query)
         rewrite_query = memory_manager.rewrite_query(query, db)
-        print("Rewritten user query:", rewrite_query)
         res_model = router.route_query(query) # use orginal query to route beacause the rewrite may change the meaning
-        print("Routed to model:", res_model)
         response = router.get_response_from_model(rewrite_query, res_model)
-        print("Final response from model:", response)
         return ApiResponse(
             success=True,
             message="路由成功",

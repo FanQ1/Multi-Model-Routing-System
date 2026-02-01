@@ -3,10 +3,10 @@ from entity.database import Conversation, ConversationMessageLink, Message,Sessi
 from service.router_service import router
 from typing import List, Dict
 from entity.vector_db import vector_orm
-
+from logger import logger
 class MemoryManager:
     def __init__(self):
-        self.conversation_summary = "Conversation started."
+        self.conversation_summary = ""
         self.work_memory: List[Dict] = []
         self.work_memory_limit = 10  # sliding window size
         self.top_k_similar_memories = 5
@@ -68,18 +68,19 @@ class MemoryManager:
         try:
             # 1. create context (Summary S, Recent Messages {m-m...}, Query)
             context_prompt = self._build_context_prompt(query)
-            print("Context Prompt for Rewriting Query:", context_prompt)
+
+
             # 2. call LLM to rewrite query
-            response = router.get_response_from_model(
-                user_query=context_prompt,
-                best_model=['glm-4']
+            response = self._rewirte_query_with_llm(
+                query=query,
+                memory=context_prompt
                 )
             print("Rewritten Query:", response)
             # 3. update work memory
             self._update_work_memory(user_msg=query, ai_msg=response)
 
             # 4. update long term memory asynchronously
-            self._extract_and_update_memory(query, response)
+            # self._extract_and_update_memory(query, response)
 
             return response
         except Exception as e:
@@ -103,8 +104,17 @@ class MemoryManager:
                 query=query,
                 top_k=self.top_k_similar_memories
             )
-            print("Relevant Long Term Memories for Context:", relevant_long_messages)
-            return f"{summary}\nRecent Messages:\n{recent_messages}\n{relevant_long_messages}\nUser Query: {query}"
+            long_term_memories_content = []
+            if relevant_long_messages and relevant_long_messages.points:
+                for point in relevant_long_messages.points:
+                    if point.payload and "content" in point.payload:
+                        long_term_memories_content.append(point.payload["content"])
+
+            long_term_memories_str = "\n".join(long_term_memories_content) if long_term_memories_content else "No relevant long term memories found."
+
+            print(f"summary:{summary}\nRecent Messages:\n{recent_messages}\nlong_term_memories:{long_term_memories_str}")
+            return f"summary:{summary}\nRecent Messages:\n{recent_messages}\nlong_term_memories:{long_term_memories_str}"
+
         except Exception as e:
             raise e
         
@@ -131,10 +141,11 @@ class MemoryManager:
         
         # 2. update long term memory based on extracted facts
         for fact in raw_facts:
+            logger.info(f"Processing extracted fact: {fact}")
             # 2.1 retrieve similar memories
             similar_memories = vector_orm.retrieve_memory(
                 collection_name="long_term_memory",
-                query_vector=vector_orm.get_offline_embedding(fact),
+                query=fact,
                 top_k=self.top_k_similar_memories
             )
             
@@ -158,9 +169,35 @@ class MemoryManager:
         
         self._async_update_summary()
 
+    def _rewirte_query_with_llm(self, query: str, memory: str) -> str:
+        prompt = f"""You are a query rewriting assistant. Your task is to rewrite the user's query based on the conversation context.
+
+## Conversation Context:
+{memory}
+
+## Original User Query:
+{query}
+
+## Instructions:
+1. If the conversation context contains relevant information that helps clarify or complete the user's intent, rewrite the query to incorporate that context.
+2. If the conversation context is NOT relevant to the current query, return the original query as-is (or fix only grammatical errors if needed).
+3. For simple greetings like "hello", "hi", etc., return the original query unchanged.
+4. Do NOT add any explanations, context, or markdown formatting.
+5. Output ONLY the rewritten query.
+
+## Rewritten Query:"""     
+
+
+        response = router.get_response_from_model(
+            user_query=prompt,
+            best_model=['glm-4']
+            )
         
+        return response
     # ============ helper methods ============
     def _format_work_memory(self):
+        if not self.work_memory:
+            return "No recent messages."
         return "\n".join([f"{m['role']}: {m['content']}" for m in self.work_memory])
     
     def _update_work_memory(self, user_msg, ai_msg):
