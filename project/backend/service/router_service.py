@@ -72,7 +72,7 @@ class RouterService:
 
             return [model[0] for model in models_asc[0:2]] # return top-2 models
 
-    def get_response_from_model(self, user_query: str, best_model: list[str]) :
+    async def get_response_from_model(self, user_query: str, best_model: list[str]) :
         """
         get response from the best available model for a user query.
 

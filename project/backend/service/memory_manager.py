@@ -4,6 +4,10 @@ from service.router_service import router
 from typing import List, Dict
 from entity.vector_db import vector_orm
 from logger import logger
+import datetime
+import asyncio
+import uuid
+
 class MemoryManager:
     def __init__(self):
         self.conversation_summary = ""
@@ -11,6 +15,7 @@ class MemoryManager:
         self.work_memory_limit = 10  # sliding window size
         self.top_k_similar_memories = 5
         
+
     # ============ conversation methods ============
     def get_all_conversations(self, db):
         """
@@ -60,8 +65,24 @@ class MemoryManager:
         except Exception as e:
             raise e
         
+    async def delete_conversation(self, conversation_id, db):
+        """
+        delete a conversation and its related messages from database
+        delete conversation_message_link、conversation and messages
+        """
+        try:
+            # delete ConversationMessageLink records
+            db.query(ConversationMessageLink).filter(ConversationMessageLink.conversation_id == conversation_id).delete()
+            # delete Conversation record
+            db.query(Conversation).filter(Conversation.id == conversation_id).delete()
+            db.commit()
+            print(f"Deleted conversation {conversation_id} and its related messages.")
+        except Exception as e:
+            db.rollback()
+            raise e
+        
     # ============ memory methods ============
-    def rewrite_query(self, query: str, db):
+    async def rewrite_query(self, query: str) -> str:
         """
         rewrite user query based on memory
         """
@@ -76,17 +97,83 @@ class MemoryManager:
                 memory=context_prompt
                 )
             print("Rewritten Query:", response)
-            # 3. update work memory
-            self._update_work_memory(user_msg=query, ai_msg=response)
-
-            # 4. update long term memory asynchronously
-            # self._extract_and_update_memory(query, response)
 
             return response
         except Exception as e:
             raise e
 
-    
+    async def store_memory(self, user_msg: str, ai_msg: str, conversation_id):
+        """
+        store work memory and long term memory
+
+        """
+        # start a new database session
+        # if injected db session is used here, may fail because of life cycle issue
+
+        try:
+        # 1. update work memory (in ram)
+            self._update_work_memory(user_msg=user_msg, ai_msg=ai_msg)
+
+            # 2. store in database
+            await self._update_message_pair_in_database(user_msg=user_msg, ai_msg=ai_msg, conversation_id=conversation_id, db=db)
+
+            # 3. update long term memory
+            await self.update_long_term_memory(user_msg=user_msg, ai_msg=ai_msg)
+        except Exception as e:
+            logger.warning(str(e))
+            raise e
+
+
+    async def _update_message_pair_in_database(self, user_msg: str, ai_msg: str, conversation_id, db):
+        db = SessionLocal()
+        # create message records
+        user_message = Message(
+            id=uuid.uuid4(),
+            message_type="user",
+            content=user_msg,
+            timestamp=datetime.utcnow()
+        )
+        ai_message = Message(
+            id=uuid.uuid4(),
+            message_type="assistant",
+            content=ai_msg,
+            timestamp=datetime.utcnow()
+        )
+
+        db.add(user_message)
+        db.add(ai_message)
+        db.commit()
+        db.refresh(user_message)
+        db.refresh(ai_message)
+
+        # create conversation message links
+        link1 = ConversationMessageLink(
+            conversation_id=conversation_id,
+            message_id=user_message.id
+        )
+        link2 = ConversationMessageLink(
+            conversation_id=conversation_id,
+            message_id=ai_message.id
+        )
+
+        db.add(link1)
+        db.add(link2)
+        db.commit()
+
+
+    async def update_long_term_memory(self, user_msg: str, ai_msg: str):
+        """
+        update long term memory
+        """
+        try:
+            # 1. create context (Summary S, Recent Messages {m-m...}, Query)
+            context_prompt = self._build_context_prompt(user_msg)
+
+            # 2. call LLM to extract salient facts or updates from the current exchange
+
+        except Exception as e:
+            raise e
+        
     def _build_context_prompt(self, query: str) -> str:
         """
         build context prompt from work memory and summary
@@ -172,20 +259,20 @@ class MemoryManager:
     def _rewirte_query_with_llm(self, query: str, memory: str) -> str:
         prompt = f"""You are a query rewriting assistant. Your task is to rewrite the user's query based on the conversation context.
 
-## Conversation Context:
-{memory}
+            ## Conversation Context:
+            {memory}
 
-## Original User Query:
-{query}
+            ## Original User Query:
+            {query}
 
-## Instructions:
-1. If the conversation context contains relevant information that helps clarify or complete the user's intent, rewrite the query to incorporate that context.
-2. If the conversation context is NOT relevant to the current query, return the original query as-is (or fix only grammatical errors if needed).
-3. For simple greetings like "hello", "hi", etc., return the original query unchanged.
-4. Do NOT add any explanations, context, or markdown formatting.
-5. Output ONLY the rewritten query.
+            ## Instructions:
+            1. If the conversation context contains relevant information that helps clarify or complete the user's intent, rewrite the query to incorporate that context.
+            2. If the conversation context is NOT relevant to the current query, return the original query as-is (or fix only grammatical errors if needed).
+            3. For simple greetings like "hello", "hi", etc., return the original query unchanged.
+            4. Do NOT add any explanations, context, or markdown formatting.
+            5. Output ONLY the rewritten query.
 
-## Rewritten Query:"""     
+            ## Rewritten Query:"""     
 
 
         response = router.get_response_from_model(
@@ -208,9 +295,10 @@ class MemoryManager:
             self.work_memory = self.work_memory[-(self.work_memory_limit * 2):]
         print("Updated work memory:", self.work_memory)
 
-    def _async_update_summary(self):
-        # TODO: 异步更新摘要
+
+    def _async_update_summary(self, user_msg: str, ai_msg: str):
         pass
+        
 
 
 
