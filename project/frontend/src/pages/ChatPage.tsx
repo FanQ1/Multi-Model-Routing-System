@@ -12,11 +12,15 @@ import {
   CircularProgress,
   Divider,
   alpha,
+  Alert,
+  Snackbar,
 } from '@mui/material';
 import {
   Send as SendIcon,
   Add as AddIcon,
   ChatBubbleOutline as ChatIcon,
+  Delete as DeleteIcon,
+  Close as CloseIcon,
 } from '@mui/icons-material';
 import { chatAPI } from '../services/api';
 
@@ -39,6 +43,7 @@ const ChatPage = () => {
   const [inputMessage, setInputMessage] = useState('');
   const [isSending, setIsSending] = useState(false);
   const [isLoadingConversations, setIsLoadingConversations] = useState(true);
+  const [error, setError] = useState<{ message: string; open: boolean }>({ message: '', open: false });
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -119,7 +124,7 @@ const ChatPage = () => {
 
     try {
       console.log('Sending message:', userMessage.content);
-      const response = await chatAPI.sendMessage(userMessage.content);
+      const response = await chatAPI.sendMessage(userMessage.content, currentConversationId || undefined);
       console.log('Full response:', response);
       console.log('Response data:', response.data);
       console.log('Response success:', response.data.success);
@@ -173,6 +178,32 @@ const ChatPage = () => {
     setSelectedConversation(null);
     setCurrentConversationId(null);
     setMessages([]);
+  };
+
+  const handleDeleteConversation = async (conversationId: string, event: React.MouseEvent) => {
+    event.stopPropagation(); // 防止触发选择对话的事件
+    
+    try {
+      const response = await chatAPI.deleteConversation(conversationId);
+      if (response.data.success) {
+        // 如果删除的是当前选中的对话，清空当前状态
+        if (selectedConversation?.id === conversationId) {
+          setSelectedConversation(null);
+          setCurrentConversationId(null);
+          setMessages([]);
+        }
+        // 重新加载对话列表
+        await loadConversations();
+      } else {
+        const errorMessage = response.data.message || '删除会话失败';
+        setError({ message: errorMessage, open: true });
+        console.error('Failed to delete conversation:', errorMessage);
+      }
+    } catch (error: any) {
+      const errorMessage = error.response?.data?.message || error.message || '删除会话失败';
+      setError({ message: errorMessage, open: true });
+      console.error('Failed to delete conversation:', error);
+    }
   };
 
   return (
@@ -259,6 +290,18 @@ const ChatPage = () => {
                       fontWeight: selectedConversation?.id === conv.id ? 600 : 400,
                     }}
                   />
+                  <IconButton
+                    edge="end"
+                    onClick={(e) => handleDeleteConversation(conv.id, e)}
+                    sx={{
+                      color: 'text.secondary',
+                      '&:hover': {
+                        color: 'error.main',
+                      },
+                    }}
+                  >
+                    <DeleteIcon fontSize="small" />
+                  </IconButton>
                 </ListItemButton>
               </ListItem>
             ))
@@ -418,6 +461,31 @@ const ChatPage = () => {
           </IconButton>
         </Box>
       </Box>
+
+      {/* 错误提示 Snackbar */}
+      <Snackbar
+        open={error.open}
+        autoHideDuration={6000}
+        onClose={() => setError({ ...error, open: false })}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+      >
+        <Alert
+          onClose={() => setError({ ...error, open: false })}
+          severity="error"
+          sx={{ width: '100%' }}
+          action={
+            <IconButton
+              size="small"
+              color="inherit"
+              onClick={() => setError({ ...error, open: false })}
+            >
+              <CloseIcon fontSize="small" />
+            </IconButton>
+          }
+        >
+          {error.message}
+        </Alert>
+      </Snackbar>
       </Box>
     </Box>
   );

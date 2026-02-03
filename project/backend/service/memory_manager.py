@@ -1,5 +1,5 @@
 import uuid
-from entity.database import Conversation, ConversationMessageLink, Message,SessionLocal
+from entity.database import Conversation, ConversationMessageLink, Message,SessionLocal, async_session_maker
 from service.router_service import router
 from typing import List, Dict
 from entity.vector_db import vector_orm
@@ -8,12 +8,14 @@ import datetime
 import asyncio
 import uuid
 
+from sqlalchemy import select, delete
 class MemoryManager:
     def __init__(self):
         self.conversation_summary = ""
         self.work_memory: List[Dict] = []
         self.work_memory_limit = 10  # sliding window size
         self.top_k_similar_memories = 5
+
         
 
     # ============ conversation methods ============
@@ -36,6 +38,9 @@ class MemoryManager:
             conversation = Conversation(id=uuid.uuid4())
             db.add(conversation)
             db.commit()
+            # update work memory
+            self.work_memory = []
+            
             return str(conversation.id)
         except Exception as e:
             db.rollback()
@@ -65,20 +70,41 @@ class MemoryManager:
         except Exception as e:
             raise e
         
-    async def delete_conversation(self, conversation_id, db):
+    async def delete_conversation(self, conversation_id):
         """
         delete a conversation and its related messages from database
         delete conversation_message_link、conversation and messages
         """
         try:
-            # delete ConversationMessageLink records
-            db.query(ConversationMessageLink).filter(ConversationMessageLink.conversation_id == conversation_id).delete()
-            # delete Conversation record
-            db.query(Conversation).filter(Conversation.id == conversation_id).delete()
-            db.commit()
-            print(f"Deleted conversation {conversation_id} and its related messages.")
+            async with async_session_maker() as db:
+                async with db.begin():
+                    # find all message_id by using conversation_id
+                    stmt_link = select(ConversationMessageLink.message_id)\
+                            .where(ConversationMessageLink.conversation_id == conversation_id)
+                    result = await db.execute(stmt_link)
+                    message_ids = result.scalars().all()
+
+                    if message_ids:
+                        # delete all messages by message_id
+                        stmt_del_msg = delete(Message)\
+                            .where(Message.id.in_(message_ids))
+                        
+                        await db.execute(stmt_del_msg)
+
+                    # delete links
+                    stmt_del_link = delete(ConversationMessageLink)\
+                        .where(ConversationMessageLink.conversation_id == conversation_id)
+                    await db.execute(stmt_del_link)
+
+                    # delete conversation
+                    stmt_del_conv = delete(Conversation)\
+                        .where(Conversation.id == conversation_id)
+                    await db.execute(stmt_del_conv)
+
+                logger.info(f"Conversation {conversation_id} deleted")
         except Exception as e:
             db.rollback()
+            logger.error(f"Failed to delete conversation {conversation_id}: {str(e)}")
             raise e
         
     # ============ memory methods ============
@@ -92,7 +118,7 @@ class MemoryManager:
 
 
             # 2. call LLM to rewrite query
-            response = self._rewirte_query_with_llm(
+            response =await self._rewirte_query_with_llm(
                 query=query,
                 memory=context_prompt
                 )
@@ -111,65 +137,112 @@ class MemoryManager:
         # if injected db session is used here, may fail because of life cycle issue
 
         try:
-        # 1. update work memory (in ram)
+            # 1. update work memory (in ram)
             self._update_work_memory(user_msg=user_msg, ai_msg=ai_msg)
 
             # 2. store in database
-            await self._update_message_pair_in_database(user_msg=user_msg, ai_msg=ai_msg, conversation_id=conversation_id, db=db)
+            await self._update_message_pair_in_database(user_msg=user_msg, ai_msg=ai_msg, conversation_id=conversation_id)
 
             # 3. update long term memory
-            await self.update_long_term_memory(user_msg=user_msg, ai_msg=ai_msg)
+            await self._update_long_term_memory(user_msg=user_msg, ai_msg=ai_msg)
         except Exception as e:
             logger.warning(str(e))
             raise e
 
 
-    async def _update_message_pair_in_database(self, user_msg: str, ai_msg: str, conversation_id, db):
+    async def _update_message_pair_in_database(self, user_msg: str, ai_msg: str, conversation_id):
         db = SessionLocal()
         # create message records
-        user_message = Message(
-            id=uuid.uuid4(),
-            message_type="user",
-            content=user_msg,
-            timestamp=datetime.utcnow()
-        )
-        ai_message = Message(
-            id=uuid.uuid4(),
-            message_type="assistant",
-            content=ai_msg,
-            timestamp=datetime.utcnow()
-        )
+        try:
+            db.begin()
 
-        db.add(user_message)
-        db.add(ai_message)
-        db.commit()
-        db.refresh(user_message)
-        db.refresh(ai_message)
+            user_message = Message(
+                id=uuid.uuid4(),
+                message_type="user",
+                content=user_msg,
+                timestamp=datetime.utcnow()
+            )
+            ai_message = Message(
+                id=uuid.uuid4(),
+                message_type="assistant",
+                content=ai_msg,
+                timestamp=datetime.utcnow()
+            )
 
-        # create conversation message links
-        link1 = ConversationMessageLink(
-            conversation_id=conversation_id,
-            message_id=user_message.id
-        )
-        link2 = ConversationMessageLink(
-            conversation_id=conversation_id,
-            message_id=ai_message.id
-        )
+            db.add(user_message)
+            db.add(ai_message)
 
-        db.add(link1)
-        db.add(link2)
-        db.commit()
+            db.flush()
 
+            # create conversation message links
+            link1 = ConversationMessageLink(
+                conversation_id=conversation_id,
+                message_id=user_message.id
+            )
+            link2 = ConversationMessageLink(
+                conversation_id=conversation_id,
+                message_id=ai_message.id
+            )
 
-    async def update_long_term_memory(self, user_msg: str, ai_msg: str):
+            db.add(link1)
+            db.add(link2)
+            db.commit()
+        except Exception as e:
+            db.rollback()
+            logger.error(f"Failed to update message pair in database: {str(e)}")
+            raise e
+        finally:
+            db.close()
+            
+    async def _update_long_term_memory(self, user_msg: str, ai_msg: str):
         """
         update long term memory
         """
         try:
-            # 1. create context (Summary S, Recent Messages {m-m...}, Query)
-            context_prompt = self._build_context_prompt(user_msg)
+            # 1. (summary, work_memory) work memory already updated in previous step
+            extract_prompt = f"""
+            Summary: {self.conversation_summary}
+            Recent: {self._format_work_memory()}
 
-            # 2. call LLM to extract salient facts or updates from the current exchange
+            Current Exchange:
+            User: {user_msg}
+            Assistant: {ai_msg}
+            
+            Task: Extract salient facts or updates from the current exchange.
+            Output as a JSON list of facts.
+            """
+            
+            # use llm to extract facts from user query and ai response
+            raw_facts = await router.get_response_from_model(extract_prompt, best_model=["glm-4"])
+
+            async def process_one_fact(fact):
+                similar_memories = vector_orm.retrieve_memory(
+                    collection_name="long_term_memory",
+                    query=fact,
+                    top_k=self.top_k_similar_memories
+                )
+
+                decision_prompt = f"""
+                Candidate Fact: {fact}
+                Existing Similar Memories: {similar_memories}
+                
+                Decide operation: ADD, UPDATE, DELETE, or NOOP.
+                """
+
+                operation = await router.get_response_from_model(decision_prompt, best_model=["glm-4"])
+                 
+                if operation == "ADD":
+                    vector_orm.add_memory(fact)
+                elif operation == "UPDATE":
+                    vector_orm.update_memory(fact, similar_memories[0].id) 
+                elif operation == "DELETE":
+                    vector_orm.delete_memory(similar_memories[0].id)
+
+                return operation
+            
+            tasks = [process_one_fact(fact) for fact in raw_facts]
+            results = await asyncio.gather(*tasks)
+            logger.info(f"Processed {len(results)} facts in parallel.")    
 
         except Exception as e:
             raise e
@@ -205,58 +278,8 @@ class MemoryManager:
         except Exception as e:
             raise e
         
-    def _extract_and_update_memory(self, user_msg: str, ai_msg: str):
-        """
-        Extraction -> Update (ADD/UPDATE/DELETE/NOOP)
-        """
-        # 1. (summary, work_memory) work memory already updated in previous step
-        extract_prompt = f"""
-        Summary: {self.conversation_summary}
-        Recent: {self._format_work_memory()}
 
-        Current Exchange:
-        User: {user_msg}
-        Assistant: {ai_msg}
-        
-        Task: Extract salient facts or updates from the current exchange.
-        Output as a JSON list of facts.
-        """
-        
-        # use llm to extract facts from user query and ai response
-        raw_facts = router.get_response_from_model(extract_prompt, best_model=["glm-4"])
-
-        
-        # 2. update long term memory based on extracted facts
-        for fact in raw_facts:
-            logger.info(f"Processing extracted fact: {fact}")
-            # 2.1 retrieve similar memories
-            similar_memories = vector_orm.retrieve_memory(
-                collection_name="long_term_memory",
-                query=fact,
-                top_k=self.top_k_similar_memories
-            )
-            
-            # 2.2. use llm to decide operation
-            decision_prompt = f"""
-            Candidate Fact: {fact}
-            Existing Similar Memories: {similar_memories}
-            
-            Decide operation: ADD, UPDATE, DELETE, or NOOP.
-            """
-            operation = router.get_response_from_model(decision_prompt, best_model=["glm-4"])
-            
-            # 2.3. perform operation
-            if operation == "ADD":
-                vector_orm.add_memory(fact)
-            elif operation == "UPDATE":
-                vector_orm.update_memory(fact, similar_memories[0].id) 
-            elif operation == "DELETE":
-                vector_orm.delete_memory(similar_memories[0].id)
-
-        
-        self._async_update_summary()
-
-    def _rewirte_query_with_llm(self, query: str, memory: str) -> str:
+    async def _rewirte_query_with_llm(self, query: str, memory: str) -> str:
         prompt = f"""You are a query rewriting assistant. Your task is to rewrite the user's query based on the conversation context.
 
             ## Conversation Context:
@@ -275,7 +298,7 @@ class MemoryManager:
             ## Rewritten Query:"""     
 
 
-        response = router.get_response_from_model(
+        response = await router.get_response_from_model(
             user_query=prompt,
             best_model=['glm-4']
             )
@@ -297,9 +320,23 @@ class MemoryManager:
 
 
     def _async_update_summary(self, user_msg: str, ai_msg: str):
-        pass
-        
+        prompt = f"""
+            Old Summary: {self.conversation_summary}
+            New Messages:
+            User: {user_msg}
+            Assistant: {ai_msg}
+            
+            Task: Update the summary to include new information.
+            """
 
+        # use llm to generate new summary
+        response = router.get_response_from_model(
+            user_query=prompt,
+            best_model=['glm-4']
+            )
+        self.conversation_summary = response
+
+        
 
 
 memory_manager = MemoryManager()

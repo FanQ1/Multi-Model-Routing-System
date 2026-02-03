@@ -40,3 +40,10 @@ RANK = [
 
 uvicorn main:app --reload
 npm run dev
+
+# python异步
+async/await 语法本质上就是协程。它让一个函数可以在执行过程中暂停（await），并在稍后恢复。这主要用于解决 IO 密集型 任务（网络请求、文件读写、数据库查询），因为 CPU 在等硬盘或网络时是闲着的
+
+asyncio是不阻塞
+
+asyncpg是数据库的异步执行，

@@ -1,6 +1,6 @@
 
 import uuid
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, Query
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 import asyncio
@@ -294,14 +294,14 @@ async def get_memory(
 
 @app.post("/api/chat/delete-conversation")
 async def delete_conversation(
-    conversation_id: uuid.UUID,
-    db: Session = Depends(get_db)
+    conversation_id: uuid.UUID = Query(...)
 ):
     """
     Delete a conversation and its associated messages
     """                             
     try:
-        memory_manager.delete_conversation(conversation_id=conversation_id, db=db)
+        print(conversation_id)
+        await memory_manager.delete_conversation(conversation_id=conversation_id)
         return ApiResponse(
             success=True,
             message="删除会话成功",
@@ -321,7 +321,6 @@ async def delete_conversation(
 @app.post("/api/chat/route")
 async def get_response(
     request: dict,
-    
 ):
     """
     Route a user query to the best available model
@@ -333,7 +332,9 @@ async def get_response(
         res_model = router.route_query(query) # use orginal query to route beacause the rewrite may change the meaning
         response = await router.get_response_from_model(rewrite_query, res_model)
         # store memory asynchronously
-        asyncio.create_task(memory_manager.store_memory(rewrite_query, response))
+        conversation_id = request.get("conversation_id")
+        if conversation_id:
+            await memory_manager.store_memory(rewrite_query, response, conversation_id)
         
         return ApiResponse(
             success=True,

@@ -56,7 +56,8 @@ export const chatAPI = {
   getAllConversations: () => api.post('/chat'),
   registerConversation: () => api.post('/chat/register-conversation'),
   getConversation: (conversationId: string) => api.post('/route/get-conversation', null, { params: { conversation_id: conversationId } }),
-  sendMessage: (query: string) => api.post('/chat/route', { query }),
+  sendMessage: (query: string, conversationId?: string) => api.post('/chat/route', { query, conversation_id: conversationId }),
+  deleteConversation: (conversationId: string) => api.post('/chat/delete-conversation', null, { params: { conversation_id: conversationId } }),
 }
 
 export default api

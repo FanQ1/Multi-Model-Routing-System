@@ -4,12 +4,23 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime
 from settings import Settings
+from sqlalchemy.ext.asyncio import create_async_engine
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 SQLALCHEMY_DATABASE_URL = Settings().get_postgresql_url()
+ASYNC_SQLALCHEMY_DATABASE_URL = Settings().get_async_postgresql_url()
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
+
+# async engine
+async_engine = create_async_engine(ASYNC_SQLALCHEMY_DATABASE_URL)
+async_session_maker = async_sessionmaker(
+    async_engine, 
+    class_=AsyncSession,
+    expire_on_commit=False
+)
 
 # Database Models
 class Model(Base):

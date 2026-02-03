@@ -465,3 +465,323 @@
 2026-02-01 23:02:30,460 - INFO - HTTP Request: POST http://localhost:6333/collections/long_term_memory/points/query "HTTP/1.1 200 OK"
 2026-02-01 23:02:30,861 - INFO - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
 2026-02-01 23:02:46,016 - INFO - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+2026-02-03 15:23:46,368 - INFO - Use pytorch device_name: cuda:0
+2026-02-03 15:23:46,369 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-03 15:23:50,818 - INFO - LLM init finished.
+2026-02-03 15:23:53,959 - INFO - HTTP Request: GET http://localhost:6333 "HTTP/1.1 200 OK"
+2026-02-03 15:23:53,970 - INFO - Use pytorch device_name: cuda:0
+2026-02-03 15:23:53,971 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-03 15:23:57,230 - INFO - HTTP Request: GET http://localhost:6333/collections "HTTP/1.1 200 OK"
+2026-02-03 15:23:57,233 - INFO - Collection 'long_term_memory' already exists.
+2026-02-03 15:29:41,554 - INFO - Use pytorch device_name: cuda:0
+2026-02-03 15:29:41,554 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-03 15:29:45,280 - INFO - LLM init finished.
+2026-02-03 15:29:47,630 - INFO - HTTP Request: GET http://localhost:6333 "HTTP/1.1 200 OK"
+2026-02-03 15:29:47,641 - INFO - Use pytorch device_name: cuda:0
+2026-02-03 15:29:47,641 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-03 15:29:50,949 - INFO - HTTP Request: GET http://localhost:6333/collections "HTTP/1.1 200 OK"
+2026-02-03 15:29:50,951 - INFO - Collection 'long_term_memory' already exists.
+2026-02-03 15:33:53,936 - INFO - Use pytorch device_name: cuda:0
+2026-02-03 15:33:53,936 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-03 15:33:57,745 - INFO - LLM init finished.
+2026-02-03 15:34:00,357 - INFO - HTTP Request: GET http://localhost:6333 "HTTP/1.1 200 OK"
+2026-02-03 15:34:00,368 - INFO - Use pytorch device_name: cuda:0
+2026-02-03 15:34:00,368 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-03 15:34:03,590 - INFO - HTTP Request: GET http://localhost:6333/collections "HTTP/1.1 200 OK"
+2026-02-03 15:34:03,592 - INFO - Collection 'long_term_memory' already exists.
+2026-02-03 16:29:03,642 - INFO - Use pytorch device_name: cuda:0
+2026-02-03 16:29:03,643 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-03 16:29:07,527 - INFO - LLM init finished.
+2026-02-03 16:29:10,199 - INFO - HTTP Request: GET http://localhost:6333 "HTTP/1.1 200 OK"
+2026-02-03 16:29:10,211 - INFO - Use pytorch device_name: cuda:0
+2026-02-03 16:29:10,211 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-03 16:29:13,358 - INFO - HTTP Request: GET http://localhost:6333/collections "HTTP/1.1 200 OK"
+2026-02-03 16:29:13,360 - INFO - Collection 'long_term_memory' already exists.
+2026-02-03 16:29:25,704 - INFO - Conversation bd87bf51-339b-44e4-a689-154d672caf3c deleted
+2026-02-03 16:29:33,976 - INFO - Conversation d7f94057-03fc-46a2-8d1b-be76e203b748 deleted
+2026-02-03 16:29:35,403 - INFO - Conversation 19c299b7-0bcc-4a46-ad34-46dbb17ace16 deleted
+2026-02-03 16:29:36,226 - INFO - Conversation b602f29c-10d4-4ef1-8867-deee8f4915ae deleted
+2026-02-03 16:29:37,017 - INFO - Conversation 9471b837-8443-4b10-8e7e-1c003ab20328 deleted
+2026-02-03 16:29:37,760 - INFO - Conversation 5269eecc-bb65-4025-a04f-584ea8132d31 deleted
+2026-02-03 16:29:38,541 - INFO - Conversation b814c841-2eb2-452f-875b-60dc08d23959 deleted
+2026-02-03 16:29:39,287 - INFO - Conversation 2e93b39d-4b42-4a82-b992-6ab88283ac9f deleted
+2026-02-03 16:29:40,016 - INFO - Conversation 13639e21-a52e-4bb1-8e4d-df027e8ac5f7 deleted
+2026-02-03 16:29:40,691 - INFO - Conversation 267e1033-c4aa-4a4c-970b-97e024810c3c deleted
+2026-02-03 16:29:41,320 - INFO - Conversation 4a96636e-f84e-4680-a61c-0dbe1bf0adc2 deleted
+2026-02-03 16:29:41,940 - INFO - Conversation 4876e06a-c759-4403-9611-bfce08be23ec deleted
+2026-02-03 16:29:42,576 - INFO - Conversation b3884400-ba71-46e8-9e03-facbed88fe10 deleted
+2026-02-03 16:29:43,218 - INFO - Conversation 5cbb15ff-2ac8-4171-b296-662fecb96db3 deleted
+2026-02-03 16:29:43,845 - INFO - Conversation 0274a518-670f-4cf1-bd64-0d6c1f0b1245 deleted
+2026-02-03 16:29:44,470 - INFO - Conversation b53a438a-14b5-4970-9505-e470b331006d deleted
+2026-02-03 16:29:45,051 - INFO - Conversation 8a066b68-2040-46f8-868a-c19882c04d95 deleted
+2026-02-03 16:29:45,584 - INFO - Conversation 90a7bc5e-dc48-45ef-a72a-d2577934371a deleted
+2026-02-03 16:29:46,169 - INFO - Conversation 756ff7fc-9bba-40b6-b1fb-098fa3304f32 deleted
+2026-02-03 16:29:46,687 - INFO - Conversation 6b8f732d-ec30-4eda-aec2-1e64d363e35f deleted
+2026-02-03 16:29:47,271 - INFO - Conversation e943bca6-7b91-49b0-91cd-5621a9a0d054 deleted
+2026-02-03 16:29:48,009 - INFO - Conversation c3954122-96f6-4223-9d78-a48a3f8a9c77 deleted
+2026-02-03 16:29:48,747 - INFO - Conversation cc4a9d2d-2ab2-4748-a8fb-9878300ebbbd deleted
+2026-02-03 16:29:54,063 - INFO - HTTP Request: POST http://localhost:6333/collections/long_term_memory/points/query "HTTP/1.1 200 OK"
+2026-02-03 16:29:54,578 - INFO - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+2026-02-03 16:29:55,314 - INFO - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+2026-02-03 16:30:35,421 - INFO - HTTP Request: POST http://localhost:6333/collections/long_term_memory/points/query "HTTP/1.1 200 OK"
+2026-02-03 16:30:36,054 - INFO - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+2026-02-03 16:30:38,131 - INFO - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+2026-02-03 16:30:38,133 - ERROR - Failed to update message pair in database: module 'datetime' has no attribute 'utcnow'
+2026-02-03 16:30:38,133 - WARNING - module 'datetime' has no attribute 'utcnow'
+2026-02-03 16:30:38,134 - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-139' coro=<MemoryManager.store_memory() done, defined at C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py:127> exception=AttributeError("module 'datetime' has no attribute 'utcnow'")>
+Traceback (most recent call last):
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 146, in store_memory
+    raise e
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 140, in store_memory
+    await self._update_message_pair_in_database(user_msg=user_msg, ai_msg=ai_msg, conversation_id=conversation_id)
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 189, in _update_message_pair_in_database
+    raise e
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 159, in _update_message_pair_in_database
+    timestamp=datetime.utcnow()
+              ^^^^^^^^^^^^^^^
+AttributeError: module 'datetime' has no attribute 'utcnow'
+2026-02-03 16:31:23,885 - INFO - HTTP Request: POST http://localhost:6333/collections/long_term_memory/points/query "HTTP/1.1 200 OK"
+2026-02-03 16:31:25,257 - INFO - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+2026-02-03 16:31:41,747 - INFO - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+2026-02-03 16:31:41,754 - ERROR - Failed to update message pair in database: module 'datetime' has no attribute 'utcnow'
+2026-02-03 16:31:41,754 - WARNING - module 'datetime' has no attribute 'utcnow'
+2026-02-03 16:31:41,754 - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-142' coro=<MemoryManager.store_memory() done, defined at C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py:127> exception=AttributeError("module 'datetime' has no attribute 'utcnow'")>
+Traceback (most recent call last):
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 146, in store_memory
+    raise e
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 140, in store_memory
+    await self._update_message_pair_in_database(user_msg=user_msg, ai_msg=ai_msg, conversation_id=conversation_id)
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 189, in _update_message_pair_in_database
+    raise e
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 159, in _update_message_pair_in_database
+    timestamp=datetime.utcnow()
+              ^^^^^^^^^^^^^^^
+AttributeError: module 'datetime' has no attribute 'utcnow'
+2026-02-03 16:32:01,594 - INFO - HTTP Request: POST http://localhost:6333/collections/long_term_memory/points/query "HTTP/1.1 200 OK"
+2026-02-03 16:32:02,429 - INFO - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+2026-02-03 16:32:37,880 - INFO - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+2026-02-03 16:32:37,884 - ERROR - Failed to update message pair in database: module 'datetime' has no attribute 'utcnow'
+2026-02-03 16:32:37,885 - WARNING - module 'datetime' has no attribute 'utcnow'
+2026-02-03 16:32:37,885 - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-145' coro=<MemoryManager.store_memory() done, defined at C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py:127> exception=AttributeError("module 'datetime' has no attribute 'utcnow'")>
+Traceback (most recent call last):
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 146, in store_memory
+    raise e
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 140, in store_memory
+    await self._update_message_pair_in_database(user_msg=user_msg, ai_msg=ai_msg, conversation_id=conversation_id)
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 189, in _update_message_pair_in_database
+    raise e
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 159, in _update_message_pair_in_database
+    timestamp=datetime.utcnow()
+              ^^^^^^^^^^^^^^^
+AttributeError: module 'datetime' has no attribute 'utcnow'
+2026-02-03 16:33:16,953 - INFO - HTTP Request: POST http://localhost:6333/collections/long_term_memory/points/query "HTTP/1.1 200 OK"
+2026-02-03 16:33:17,968 - INFO - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+2026-02-03 16:33:38,136 - INFO - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+2026-02-03 16:33:38,143 - ERROR - Failed to update message pair in database: module 'datetime' has no attribute 'utcnow'
+2026-02-03 16:33:38,143 - WARNING - module 'datetime' has no attribute 'utcnow'
+2026-02-03 16:33:38,143 - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-148' coro=<MemoryManager.store_memory() done, defined at C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py:127> exception=AttributeError("module 'datetime' has no attribute 'utcnow'")>
+Traceback (most recent call last):
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 146, in store_memory
+    raise e
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 140, in store_memory
+    await self._update_message_pair_in_database(user_msg=user_msg, ai_msg=ai_msg, conversation_id=conversation_id)
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 189, in _update_message_pair_in_database
+    raise e
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 159, in _update_message_pair_in_database
+    timestamp=datetime.utcnow()
+              ^^^^^^^^^^^^^^^
+AttributeError: module 'datetime' has no attribute 'utcnow'
+2026-02-03 16:34:11,507 - INFO - HTTP Request: POST http://localhost:6333/collections/long_term_memory/points/query "HTTP/1.1 200 OK"
+2026-02-03 16:34:12,354 - INFO - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+2026-02-03 16:34:13,917 - INFO - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+2026-02-03 16:34:13,924 - ERROR - Failed to update message pair in database: module 'datetime' has no attribute 'utcnow'
+2026-02-03 16:34:13,924 - WARNING - module 'datetime' has no attribute 'utcnow'
+2026-02-03 16:34:13,924 - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-151' coro=<MemoryManager.store_memory() done, defined at C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py:127> exception=AttributeError("module 'datetime' has no attribute 'utcnow'")>
+Traceback (most recent call last):
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 146, in store_memory
+    raise e
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 140, in store_memory
+    await self._update_message_pair_in_database(user_msg=user_msg, ai_msg=ai_msg, conversation_id=conversation_id)
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 189, in _update_message_pair_in_database
+    raise e
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 159, in _update_message_pair_in_database
+    timestamp=datetime.utcnow()
+              ^^^^^^^^^^^^^^^
+AttributeError: module 'datetime' has no attribute 'utcnow'
+2026-02-03 16:34:26,309 - INFO - HTTP Request: POST http://localhost:6333/collections/long_term_memory/points/query "HTTP/1.1 200 OK"
+2026-02-03 16:34:27,827 - INFO - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+2026-02-03 16:34:54,342 - INFO - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+2026-02-03 16:34:54,347 - ERROR - Failed to update message pair in database: module 'datetime' has no attribute 'utcnow'
+2026-02-03 16:34:54,347 - WARNING - module 'datetime' has no attribute 'utcnow'
+2026-02-03 16:34:54,347 - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-154' coro=<MemoryManager.store_memory() done, defined at C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py:127> exception=AttributeError("module 'datetime' has no attribute 'utcnow'")>
+Traceback (most recent call last):
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 146, in store_memory
+    raise e
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 140, in store_memory
+    await self._update_message_pair_in_database(user_msg=user_msg, ai_msg=ai_msg, conversation_id=conversation_id)
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 189, in _update_message_pair_in_database
+    raise e
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 159, in _update_message_pair_in_database
+    timestamp=datetime.utcnow()
+              ^^^^^^^^^^^^^^^
+AttributeError: module 'datetime' has no attribute 'utcnow'
+2026-02-03 16:44:46,074 - INFO - HTTP Request: POST http://localhost:6333/collections/long_term_memory/points/query "HTTP/1.1 200 OK"
+2026-02-03 16:44:46,372 - INFO - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-03 16:44:46,372 - INFO - Retrying request to /chat/completions in 0.976082 seconds
+2026-02-03 16:44:47,591 - INFO - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-03 16:44:47,591 - INFO - Retrying request to /chat/completions in 1.607862 seconds
+2026-02-03 16:44:49,332 - INFO - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-03 16:44:49,333 - INFO - Retrying request to /chat/completions in 3.535168 seconds
+2026-02-03 16:44:53,110 - INFO - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-02-03 16:47:17,719 - INFO - HTTP Request: POST http://localhost:6333/collections/long_term_memory/points/query "HTTP/1.1 200 OK"
+2026-02-03 16:47:18,871 - INFO - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+2026-02-03 16:47:49,407 - INFO - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+2026-02-03 16:47:49,412 - ERROR - Failed to update message pair in database: module 'datetime' has no attribute 'utcnow'
+2026-02-03 16:47:49,413 - WARNING - module 'datetime' has no attribute 'utcnow'
+2026-02-03 16:47:49,413 - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-163' coro=<MemoryManager.store_memory() done, defined at C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py:127> exception=AttributeError("module 'datetime' has no attribute 'utcnow'")>
+Traceback (most recent call last):
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 146, in store_memory
+    raise e
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 140, in store_memory
+    await self._update_message_pair_in_database(user_msg=user_msg, ai_msg=ai_msg, conversation_id=conversation_id)
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 189, in _update_message_pair_in_database
+    raise e
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 159, in _update_message_pair_in_database
+    timestamp=datetime.utcnow()
+              ^^^^^^^^^^^^^^^
+AttributeError: module 'datetime' has no attribute 'utcnow'
+2026-02-03 16:48:02,357 - INFO - Conversation 8b08fea9-83b3-494f-88b8-d1444a28fec6 deleted
+2026-02-03 16:48:03,291 - INFO - Conversation f59dde83-388e-4479-963c-1ee94c1fafdb deleted
+2026-02-03 16:48:14,151 - INFO - HTTP Request: POST http://localhost:6333/collections/long_term_memory/points/query "HTTP/1.1 200 OK"
+2026-02-03 16:48:14,892 - INFO - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+2026-02-03 16:48:15,331 - INFO - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+2026-02-03 16:48:30,803 - INFO - HTTP Request: POST http://localhost:6333/collections/long_term_memory/points/query "HTTP/1.1 200 OK"
+2026-02-03 16:48:32,080 - INFO - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+2026-02-03 16:48:52,938 - INFO - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+2026-02-03 16:48:52,944 - ERROR - Failed to update message pair in database: module 'datetime' has no attribute 'utcnow'
+2026-02-03 16:48:52,944 - WARNING - module 'datetime' has no attribute 'utcnow'
+2026-02-03 16:48:52,944 - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-182' coro=<MemoryManager.store_memory() done, defined at C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py:127> exception=AttributeError("module 'datetime' has no attribute 'utcnow'")>
+Traceback (most recent call last):
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 146, in store_memory
+    raise e
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 140, in store_memory
+    await self._update_message_pair_in_database(user_msg=user_msg, ai_msg=ai_msg, conversation_id=conversation_id)
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 189, in _update_message_pair_in_database
+    raise e
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 159, in _update_message_pair_in_database
+    timestamp=datetime.utcnow()
+              ^^^^^^^^^^^^^^^
+AttributeError: module 'datetime' has no attribute 'utcnow'
+2026-02-03 16:48:59,350 - INFO - Conversation 4d86f36c-026e-4013-b31b-e71e373fe9bb deleted
+2026-02-03 16:50:48,365 - INFO - Use pytorch device_name: cuda:0
+2026-02-03 16:50:48,365 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-03 16:50:52,067 - INFO - LLM init finished.
+2026-02-03 16:50:54,819 - INFO - HTTP Request: GET http://localhost:6333 "HTTP/1.1 200 OK"
+2026-02-03 16:50:54,832 - INFO - Use pytorch device_name: cuda:0
+2026-02-03 16:50:54,832 - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-02-03 16:50:57,953 - INFO - HTTP Request: GET http://localhost:6333/collections "HTTP/1.1 200 OK"
+2026-02-03 16:50:57,955 - INFO - Collection 'long_term_memory' already exists.
+2026-02-03 16:51:24,576 - INFO - HTTP Request: POST http://localhost:6333/collections/long_term_memory/points/query "HTTP/1.1 200 OK"
+2026-02-03 16:51:24,983 - INFO - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+2026-02-03 16:51:26,048 - INFO - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+2026-02-03 16:51:33,221 - INFO - HTTP Request: POST http://localhost:6333/collections/long_term_memory/points/query "HTTP/1.1 200 OK"
+2026-02-03 16:51:34,300 - INFO - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+2026-02-03 16:51:36,377 - INFO - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+2026-02-03 16:52:15,446 - INFO - HTTP Request: POST http://localhost:6333/collections/long_term_memory/points/query "HTTP/1.1 200 OK"
+2026-02-03 16:52:16,404 - INFO - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+2026-02-03 16:52:26,324 - INFO - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+2026-02-03 16:52:26,327 - ERROR - Failed to update message pair in database: module 'datetime' has no attribute 'utcnow'
+2026-02-03 16:52:26,327 - WARNING - module 'datetime' has no attribute 'utcnow'
+2026-02-03 16:52:26,327 - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-17' coro=<MemoryManager.store_memory() done, defined at C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py:131> exception=AttributeError("module 'datetime' has no attribute 'utcnow'")>
+Traceback (most recent call last):
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 150, in store_memory
+    raise e
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 144, in store_memory
+    await self._update_message_pair_in_database(user_msg=user_msg, ai_msg=ai_msg, conversation_id=conversation_id)
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 193, in _update_message_pair_in_database
+    raise e
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 163, in _update_message_pair_in_database
+    timestamp=datetime.utcnow()
+              ^^^^^^^^^^^^^^^
+AttributeError: module 'datetime' has no attribute 'utcnow'
+2026-02-03 16:52:45,278 - INFO - HTTP Request: POST http://localhost:6333/collections/long_term_memory/points/query "HTTP/1.1 200 OK"
+2026-02-03 16:52:45,956 - INFO - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+2026-02-03 16:53:05,095 - INFO - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+2026-02-03 16:53:05,101 - ERROR - Failed to update message pair in database: module 'datetime' has no attribute 'utcnow'
+2026-02-03 16:53:05,101 - WARNING - module 'datetime' has no attribute 'utcnow'
+2026-02-03 16:53:05,101 - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-20' coro=<MemoryManager.store_memory() done, defined at C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py:131> exception=AttributeError("module 'datetime' has no attribute 'utcnow'")>
+Traceback (most recent call last):
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 150, in store_memory
+    raise e
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 144, in store_memory
+    await self._update_message_pair_in_database(user_msg=user_msg, ai_msg=ai_msg, conversation_id=conversation_id)
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 193, in _update_message_pair_in_database
+    raise e
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 163, in _update_message_pair_in_database
+    timestamp=datetime.utcnow()
+              ^^^^^^^^^^^^^^^
+AttributeError: module 'datetime' has no attribute 'utcnow'
+2026-02-03 16:53:28,231 - INFO - HTTP Request: POST http://localhost:6333/collections/long_term_memory/points/query "HTTP/1.1 200 OK"
+2026-02-03 16:53:29,273 - INFO - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+2026-02-03 16:53:45,374 - INFO - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+2026-02-03 16:53:45,380 - ERROR - Failed to update message pair in database: module 'datetime' has no attribute 'utcnow'
+2026-02-03 16:53:45,380 - WARNING - module 'datetime' has no attribute 'utcnow'
+2026-02-03 16:53:45,380 - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-23' coro=<MemoryManager.store_memory() done, defined at C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py:131> exception=AttributeError("module 'datetime' has no attribute 'utcnow'")>
+Traceback (most recent call last):
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 150, in store_memory
+    raise e
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 144, in store_memory
+    await self._update_message_pair_in_database(user_msg=user_msg, ai_msg=ai_msg, conversation_id=conversation_id)
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 193, in _update_message_pair_in_database
+    raise e
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 163, in _update_message_pair_in_database
+    timestamp=datetime.utcnow()
+              ^^^^^^^^^^^^^^^
+AttributeError: module 'datetime' has no attribute 'utcnow'
+2026-02-03 16:56:39,047 - INFO - HTTP Request: POST http://localhost:6333/collections/long_term_memory/points/query "HTTP/1.1 200 OK"
+2026-02-03 16:56:41,720 - INFO - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+2026-02-03 16:56:45,364 - INFO - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+2026-02-03 16:56:45,368 - ERROR - Failed to update message pair in database: module 'datetime' has no attribute 'utcnow'
+2026-02-03 16:56:45,369 - WARNING - module 'datetime' has no attribute 'utcnow'
+2026-02-03 16:56:45,369 - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-26' coro=<MemoryManager.store_memory() done, defined at C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py:131> exception=AttributeError("module 'datetime' has no attribute 'utcnow'")>
+Traceback (most recent call last):
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 150, in store_memory
+    raise e
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 144, in store_memory
+    await self._update_message_pair_in_database(user_msg=user_msg, ai_msg=ai_msg, conversation_id=conversation_id)
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 193, in _update_message_pair_in_database
+    raise e
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 163, in _update_message_pair_in_database
+    timestamp=datetime.utcnow()
+              ^^^^^^^^^^^^^^^
+AttributeError: module 'datetime' has no attribute 'utcnow'
+2026-02-03 16:57:31,345 - INFO - HTTP Request: POST http://localhost:6333/collections/long_term_memory/points/query "HTTP/1.1 200 OK"
+2026-02-03 16:57:32,618 - INFO - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+2026-02-03 16:57:58,380 - INFO - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+2026-02-03 16:57:58,386 - ERROR - Failed to update message pair in database: module 'datetime' has no attribute 'utcnow'
+2026-02-03 16:57:58,387 - WARNING - module 'datetime' has no attribute 'utcnow'
+2026-02-03 16:57:58,387 - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-29' coro=<MemoryManager.store_memory() done, defined at C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py:131> exception=AttributeError("module 'datetime' has no attribute 'utcnow'")>
+Traceback (most recent call last):
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 150, in store_memory
+    raise e
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 144, in store_memory
+    await self._update_message_pair_in_database(user_msg=user_msg, ai_msg=ai_msg, conversation_id=conversation_id)
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 193, in _update_message_pair_in_database
+    raise e
+  File "C:\Users\Fanqy\Desktop\mY\NTU\capstone\project\backend\service\memory_manager.py", line 163, in _update_message_pair_in_database
+    timestamp=datetime.utcnow()
+              ^^^^^^^^^^^^^^^
+AttributeError: module 'datetime' has no attribute 'utcnow'
